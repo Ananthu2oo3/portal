@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="top-right-logo">
+    <img src="https://www.kaartech.com/wp-content/uploads/2024/09/Non-Text-Magic-Studio-Magic-Design-for-Presentations-LampP-5.png" alt="Logo">
+  </div>
+
+  <h3>Drowning in Data? <br> We’ll Decode It</h3>
+
+
+  <!-- <div class="typewriter">
+  <span class="text"></span>
+</div> -->
+
+
+  <div class="card__container">
+    
+    <article class="card__article" (click)="navigateTo('customer-login')">
+      <img src="https://i.pinimg.com/736x/97/b1/62/97b16238a4a8a2b3d509323ba14b96c9.jpg" alt="Vendor Login" class="card__img">
+      <div class="card__data">
+        <span class="card__description">CUSTOMER PORTAL</span>
+        <h2 class="card__title">Login</h2>
+      </div>
+    </article>
+
+    <article class="card__article" (click)="navigateTo('vendor-login')">
+      <img src="https://i.pinimg.com/736x/f1/c9/27/f1c9279ee0eff3238e92f3e77d33325a.jpg" alt="Vendor Login" class="card__img">
+      <div class="card__data">
+        <span class="card__description">VENDOR PORTAL</span>
+        <h2 class="card__title">Login</h2>
+      </div>
+    </article>
+
+    <article class="card__article" (click)="navigateTo('employee-login')">
+      <img src= "https://i.pinimg.com/736x/f5/b4/da/f5b4dada0a46364a6c35f08a37e43479.jpg" alt="Employee Login" class="card__img">
+      <div class="card__data">
+        <span class="card__description">EMPLOYEE PORTAL</span>
+        <h2 class="card__title">Login</h2>
+
+      </div>
+    </article>
+
+  </div>
+</div>
+
+
+<script>
+  const phrases = [
+    "Hello World",
+    "Welcome to My Page",
+    "Enjoy the Animation!",
+    "Let's Build Something Awesome"
+  ];
+
+  const textElement = document.querySelector(".text");
+  let phraseIndex = 0;
+  let charIndex = 0;
+  let typing = true;
+
+  function typeEffect() {
+    const currentPhrase = phrases[phraseIndex];
+    
+    if (typing) {
+      if (charIndex <= currentPhrase.length) {
+        textElement.textContent = currentPhrase.slice(0, charIndex++);
+        setTimeout(typeEffect, 100);
+      } else {
+        typing = false;
+        setTimeout(typeEffect, 1000);
+      }
+    } else {
+      if (charIndex >= 0) {
+        textElement.textContent = currentPhrase.slice(0, charIndex--);
+        setTimeout(typeEffect, 50);
+      } else {
+        typing = true;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        setTimeout(typeEffect, 500);
+      }
+    }
+  }
+
+  typeEffect();
+</script>
+

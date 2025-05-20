@@ -1,0 +1,113 @@
+
+.login-container {
+  display: flex;
+  justify-content: flex-start;  
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('login.png');
+  margin: -10px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;  
+  overflow: hidden;
+}
+
+
+.top-right-logo {
+  position: absolute;
+  top: 80px;
+  right: 30px;
+  z-index: 1000;
+}
+
+.top-right-logo img {
+  width: 200px; 
+  height: auto;
+}
+
+
+.login-card {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 40px;
+  border-radius: 10px;
+  width: 380px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-left: 100px;
+}
+
+
+.login-card h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  font-weight: 500;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border 0.3s ease-in-out;
+}
+
+.input-group input:focus {
+  border: 1px solid #007bff; 
+}
+
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #0056b3;  
+}
+
+
+@media (max-width: 768px) {
+  .login-container {
+    padding: 2px;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .input-group input {
+    font-size: 14px;  
+  }
+
+  .login-button {
+    font-size: 16px;  
+  }
+}
