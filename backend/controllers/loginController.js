@@ -1,9 +1,6 @@
-const express = require('express');
 const axios = require('axios');
-const router = express.Router();
-require('dotenv').config(); // Load .env file
 
-router.post('/login', async (req, res) => {
+exports.handleLogin = async (req, res) => {
   console.log('🔵 [1] Received login request');
 
   const { username, password } = req.body;
@@ -21,7 +18,7 @@ router.post('/login', async (req, res) => {
     </soapenv:Envelope>`;
 
   try {
-    const response = await axios.post(process.env.SAP_SOAP_URL, soapEnvelope, {
+    const response = await axios.post(process.env.LOGIN_URL, soapEnvelope, {
       headers: {
         'Content-Type': 'text/xml; charset=utf-8',
         'Authorization': 'Basic ' + Buffer.from(`${process.env.SAP_USERNAME}:${process.env.SAP_PASSWORD}`).toString('base64')
@@ -34,12 +31,16 @@ router.post('/login', async (req, res) => {
 
     const statusMatch = response.data.match(/<STATUS>(.*?)<\/STATUS>/);
     const ev_status = statusMatch ? statusMatch[1] : 'E';
+
+    if (ev_status === 'SUCCESS') {
+      req.session.username = username; 
+      console.log('🟢 [4] Session updated with username:', req.session.username);
+    }
+
     res.json({ status: ev_status });
 
   } catch (error) {
     console.error('SAP Request Error:', error.response ? error.response.data : error.message);
     res.status(500).json({ status: 'E', message: 'Error contacting SAP service.' });
   }
-});
-
-module.exports = router;
+};

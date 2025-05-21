@@ -36,9 +36,10 @@ export class LoginComponent {
       next: (res) => {
         this.isLoading = false;
         if (res.status === 'SUCCESS') {
+          localStorage.setItem('username', this.username);
           this.statusMessage = 'Login successful!';
           this.router.navigate(['/customer-dashboard']);
-          // You might want to redirect or store auth token here
+
         } else {
           this.statusMessage = res.message || 'Login failed';
         }

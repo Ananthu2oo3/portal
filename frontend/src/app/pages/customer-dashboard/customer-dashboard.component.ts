@@ -97,14 +97,16 @@
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SidebarNavComponent],
   templateUrl: './customer-dashboard.component.html',
   styleUrls: ['./customer-dashboard.component.css']
 })
+
 export class CustomerDashboardComponent {
   isCollapsed = false;
   isCreateOpen = false;

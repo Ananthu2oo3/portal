@@ -1,0 +1,25 @@
+<nav class="nav">
+  <ul class="nav__list">
+    <a [routerLink]="['/accounts']" [ngClass]="{ 'active-link': currentRoute === '/accounts' }" class="nav__link">
+      <i class="ri-account-box-line"></i>
+      <span class="nav__name">Accounts</span>
+    </a>
+    <a [routerLink]="['/customer-dashboard']" [ngClass]="{ 'active-link': currentRoute === '/customer-dashboard' }" class="nav__link">
+      <i class="ri-file-list-3-line"></i>
+      <span class="nav__name">Customer Dashboard</span>
+    </a>
+    <a [routerLink]="['/financial-sheet']" [ngClass]="{ 'active-link': currentRoute === '/financial-sheet' }" class="nav__link">
+      <i class="ri-wallet-2-line"></i>
+      <span class="nav__name">Financial Sheet</span>
+    </a>
+    <a [routerLink]="['/logout']" [ngClass]="{ 'active-link': currentRoute === '/logout' }" class="nav__link">
+      <i class="ri-logout-box-line"></i>
+      <span class="nav__name">Logout</span>
+    </a>
+  </ul>
+
+  <div class="nav__circle-1"></div>
+  <div class="nav__circle-2"></div>
+  <div class="nav__square-1"></div>
+  <div class="nav__square-2"></div>
+</nav>

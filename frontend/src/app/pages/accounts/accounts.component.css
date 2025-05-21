@@ -1,128 +1,57 @@
-/*=============== GOOGLE FONTS ===============*/
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
-/*=============== VARIABLES CSS ===============*/
-:root {
-  /*========== Colors ==========*/
-  --first-color: hsl(52, 100%, 50%);
-  --black-color: hsl(248, 24%, 10%);
-  --white-color: #fff;
-  --body-color: hsl(248, 100%, 99%);
-  /*========== Font and typography ==========*/
-  --body-font: "Poppins", sans-serif;
-  --small-font-size: .813rem;
-}
-@media screen and (min-width: 1024px) {
-  :root {
-    --small-font-size: .875rem;
-  }
+
+.container{
+  margin-left: 100px;
 }
 
-/*=============== BASE ===============*/
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+.title{
+  margin-top: 50px;
+  /* margin-left: 100px; */
+  margin-bottom: -20px;
+  font-size: 50px;
+  font-family: 'Poppins';
 }
 
-body {
-  font-family: var(--body-font);
-  background-color: var(--body-color);
+.styled-table {
+  width: 100%;
+  border-collapse: separate; /* So we can use spacing */
+  border-spacing: 0 12px; /* vertical spacing between rows */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  color: #333;
+  margin: 20px 0;
 }
 
-ul {
-  list-style: none;
+.styled-table thead tr {
+  background-color: rgb(255, 234, 0);
+  color: white;
+  text-align: left;
 }
 
-a {
-  text-decoration: none;
+.styled-table th,
+.styled-table td {
+  padding: 12px 20px;
+  border: none; /* Remove default border for cleaner look */
 }
 
-main {
-  margin-inline: 6rem 1rem;
-  padding-block: 2rem;
+.styled-table tbody tr {
+  background-color: #f9f9f9;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease;
 }
 
-/*=============== SIDEBAR ===============*/
-.nav {
-  width: 72px;
-  height: max-content;
-  position: fixed;
-  inset: 0;
-  margin: auto 0;
-}
-.nav__list {
-  position: relative;
-  background-color: var(--first-color);
-  padding-block: 70px;
-  border-radius: 0 51px 51px 0;
-  display: grid;
-  justify-content: center;
-  row-gap: 2rem;
-}
-.nav__link {
-  position: relative;
-  display: inline-flex;
-  padding: 14px;
-  border-radius: 50%;
-  transition: background 0.4s;
-}
-.nav__link i {
-  font-size: 1.25rem;
-  color: var(--white-color);
-  transition: color 0.4s;
-}
-.nav__link:hover .nav__name {
-  opacity: 1;
-  transform: translateX(48px);
-}
-.nav__name {
-  position: absolute;
-  top: 0;
-  transform: translateX(56px);
-  background-color: var(--black-color);
-  color: var(--white-color);
-  font-size: var(--small-font-size);
-  font-weight: 500;
-  padding: 6px 16px;
-  border-radius: 3rem;
-  pointer-events: none;
-  transition: transform 0.5s, opacity 0.5s;
-  opacity: 0;
-}
-.nav__circle-1, .nav__circle-2 {
-  width: 80px;
-  height: 80px;
-  background-color: var(--body-color);
-  border-radius: 50%;
-  position: absolute;
-  left: 0;
-  z-index: 10;
-}
-.nav__circle-1 {
-  top: -78px;
-}
-.nav__circle-2 {
-  bottom: -78px;
-}
-.nav__square-1, .nav__square-2 {
-  width: 35px;
-  height: 40px;
-  background-color: var(--first-color);
-  position: absolute;
-  left: 0;
-  z-index: 1;
-}
-.nav__square-1 {
-  top: -39px;
-}
-.nav__square-2 {
-  bottom: -39px;
+.styled-table tbody tr:hover {
+  background-color: #e6f0ff;
 }
 
-/* Active link */
-.active-link {
-  background-color: var(--white-color);
+.styled-table tbody tr td:first-child {
+  font-weight: 600;
+  color: #222;
+  width: 30%;
 }
-.active-link i {
-  color: var(--first-color);
+
+.styled-table tbody tr td:last-child {
+  width: 70%;
+  word-break: break-word; /* Handle long text gracefully */
 }

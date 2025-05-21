@@ -1,0 +1,137 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+:root {
+  /* --first-color: hsl(52, 100%, 50%); */
+  --first-color: rgb(255, 234, 0);
+  --black-color: hsl(248, 24%, 10%);
+  --white-color: #fff;
+  --body-color: hsl(248, 100%, 99%);
+  --body-font: "Poppins", sans-serif;
+  --small-font-size: .813rem;
+}
+@media screen and (min-width: 1024px) {
+  :root {
+    --small-font-size: .875rem;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--body-font);
+  background-color: #fff;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+main {
+  margin-inline: 6rem 1rem;
+  padding-block: 2rem;
+}
+
+.nav {
+  width: 72px;
+  height: max-content;
+  position: fixed;
+  inset: 0;
+  margin: auto 0;
+}
+
+.nav__list {
+  position: relative;
+  background-color: rgb(255, 234, 0);
+  padding-block: 70px;
+  border-radius: 0 51px 51px 0;
+  display: grid;
+  justify-content: center;
+  row-gap: 2rem;
+}
+
+.nav__link {
+  position: relative;
+  display: inline-flex;
+  padding: 14px;
+  border-radius: 50%;
+  transition: background 0.4s;
+}
+
+.nav__link i {
+  font-size: 1.25rem;
+  color: #fff;
+  transition: color 0.4s;
+}
+
+.nav__link:hover .nav__name {
+  opacity: 1;
+  transform: translateX(48px);
+}
+
+.nav__name {
+  position: absolute;
+  top: 0;
+  transform: translateX(56px);
+  background-color: #000;
+  color: #fff;
+  font-size: var(--small-font-size);
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 3rem;
+  pointer-events: none;
+  transition: transform 0.5s, opacity 0.5s;
+  opacity: 0;
+}
+
+.nav__circle-1,
+.nav__circle-2 {
+  width: 80px;
+  height: 80px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  z-index: 10;
+}
+
+.nav__circle-1 {
+  top: -78px;
+}
+
+.nav__circle-2 {
+  bottom: -78px;
+}
+
+.nav__square-1,
+.nav__square-2 {
+  width: 35px;
+  height: 40px;
+  background-color: rgb(255, 234, 0);
+  position: absolute;
+  left: 0;
+  z-index: 1;
+}
+
+.nav__square-1 {
+  top: -39px;
+}
+
+.nav__square-2 {
+  bottom: -39px;
+}
+
+.active-link {
+  background-color: #fff;
+}
+
+.active-link i {
+  color: rgb(255, 234, 0);
+}
