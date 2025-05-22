@@ -8,6 +8,8 @@ SAP_PASSWORD = "password"
 LOGIN_URL    = "SOAP_access_url_login"
 PROFILE_URL  = "SOAP_access_url_profile"
 INQUIRY_URL  = "SOAP_access_url_inquiry"
+DELIVERY_URL = "SOAP_access_url_inquiry"
+SALES_ORDER_URL = "SOAP_access_url_inquiry"
 
 
 ## Run Frontend
