@@ -5,7 +5,6 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
 
   { path: 'customer-login', loadComponent: () => import('./customer/customer.component').then(m => m.LoginComponent) },
-  // { path: 'customer-login', loadComponent: () => import('./customer-login/customer-login.component').then(m => m.LoginComponent) },
   { path: 'vendor-login', loadComponent: () => import('./vendor/vendor.component').then(m => m.VendorComponent) },
   { path: 'employee-login', loadComponent: () => import('./employee/employee.component').then(m => m.EmployeeComponent) },
 
@@ -15,5 +14,8 @@ export const routes: Routes = [
   { path: 'logout', loadComponent: () => import('./pages/logout/logout.component').then(m => m.LogoutComponent) },
 
   { path: 'inquiry-data', loadComponent: () => import('./pages/inquiry/inquiry.component').then(m => m.InquirdData) },
+  { path: 'delivery-data', loadComponent: () => import('./pages/delivery/delivery.component').then(m => m.DeliveryDataComponent) },
+  { path: 'sales-order-data', loadComponent: () => import('./pages/sale-order-data/sale-order-data.component').then(m => m.SaleOrderDataComponent) },
 
 ];
+
