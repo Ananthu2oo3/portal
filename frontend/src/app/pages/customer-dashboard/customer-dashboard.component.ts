@@ -120,4 +120,8 @@ export class CustomerDashboardComponent {
     if (type === 'create') this.isCreateOpen = !this.isCreateOpen;
     if (type === 'todo') this.isTodoOpen = !this.isTodoOpen;
   }
+
+  navigateTo(path: string) {
+    window.location.href = '/' + path;
+  }
 }

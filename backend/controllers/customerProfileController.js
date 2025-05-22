@@ -1,10 +1,6 @@
 const axios = require('axios');
 
 exports.getCustomerProfile = async (req, res) => {
-  
-  // const customer_id  = req.session.username.trim();
-  // console.log(req.session.username)
-  // const customer_id = "0000000001"
 
   const customer_id = req.body.username?.trim(); // ✅ Get from request body
 

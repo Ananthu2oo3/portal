@@ -28,7 +28,6 @@ import { RouterModule } from '@angular/router';
 })
 export class HomeComponent {
   navigateTo(path: string) {
-    // Angular route navigation
     window.location.href = '/' + path;
   }
 }

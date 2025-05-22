@@ -127,12 +127,12 @@ main {
   color: var(--first-color);
 }
 
-
 .title{
   margin-top: 70px;
   margin-left: 100px;
   margin-bottom: -50px;
   font-size: 50px;
+  font-family: 'Poppins';
 }
 
 .card__container {

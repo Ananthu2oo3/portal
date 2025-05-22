@@ -14,4 +14,6 @@ export const routes: Routes = [
   { path: 'financial-sheet', loadComponent: () => import('./pages/financial-sheet/financial-sheet.component').then(m => m.FinancialSheetComponent) },
   { path: 'logout', loadComponent: () => import('./pages/logout/logout.component').then(m => m.LogoutComponent) },
 
+  { path: 'inquiry-data', loadComponent: () => import('./pages/inquiry/inquiry.component').then(m => m.InquirdData) },
+
 ];
