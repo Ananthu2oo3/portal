@@ -1,8 +1,8 @@
 const axios = require('axios');
 const xml2js = require('xml2js');
 
-exports.getSalesOrderData = async (req, res) => {
-  const customer_id = req.body.username?.trim();
+exports.getPaymentAgingData = async (req, res) => {
+  let customer_id = req.body.username?.trim();
 
   if (!customer_id) {
     return res.status(400).json({
@@ -11,21 +11,23 @@ exports.getSalesOrderData = async (req, res) => {
     });
   }
 
-  console.log('📥 Received customer_id:', customer_id);
+  // Ensure customer_id is a 10-digit string with leading zeros
+  customer_id = customer_id.padStart(10, '0');
+  console.log('📥 Formatted customer_id:', customer_id);
 
   const soapEnvelope = `
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
                       xmlns:urn="urn:sap-com:document:sap:rfc:functions">
       <soapenv:Header/>
       <soapenv:Body>
-        <urn:ZSOD_AKG_FM>
+        <urn:ZPA_AKG_FM>
           <IV_SOLD_TO_PARTY>${customer_id}</IV_SOLD_TO_PARTY>
-        </urn:ZSOD_AKG_FM>
+        </urn:ZPA_AKG_FM>
       </soapenv:Body>
     </soapenv:Envelope>`;
 
   try {
-    const response = await axios.post(process.env.SALES_ORDER_URL, soapEnvelope, {
+    const response = await axios.post(process.env.PAYMENT_AGING_URL, soapEnvelope, {
       headers: {
         'Content-Type': 'text/xml;charset=UTF-8',
         'Authorization': 'Basic ' + Buffer.from(`${process.env.SAP_USERNAME}:${process.env.SAP_PASSWORD}`).toString('base64'),
@@ -55,47 +57,13 @@ exports.getSalesOrderData = async (req, res) => {
         const responseKey = Object.keys(body)[0];
         const responseData = body[responseKey];
 
-        // ✅ Use the correct tag from your XML
-        const items = responseData.ET_SALESORD_LIST?.item;
+        const items = responseData.ET_AGING?.item;
         const itemList = Array.isArray(items) ? items : items ? [items] : [];
-
-
-        // ✅ Filter only required fields
-        // const filteredItemList = itemList.map(item => ({
-        //   SALES_DOC_NUMBER: item.SALES_DOC_NUMBER,
-        //   ORG: item.ORG,
-        //   SALES_REQ_DEL_DATE: item.SALES_REQ_DEL_DATE,
-        //   SOLD_TO_PARTY: item.SOLD_TO_PARTY,
-        //   MATERIAL_AVAILABLE_DATE: item.MATERIAL_AVAILABLE_DATE,
-        //   MATERIAL_DESCRIP: item.MATERIAL_DESCRIP,
-        //   CUSTOMER_NAME: item.CUSTOMER_NAME,
-        //   ORDER_QUANTITY: item.ORDER_QUANTITY,
-        //   CREDIT_DEBIT: item.CREDIT_DEBIT,
-        //   BKPF: item.BKPF
-        // }));
-
-        const filteredItemList = itemList.map(item => ({
-
-          "Sales Doc Number": item.SALES_DOC_NUMBER,
-          "Material Available Date": item.MATERIAL_AVAILABLE_DATE,
-          "Order Quantity": item.ORDER_QUANTITY,
-          "Sales Org": item.SALES_ORG,
-          "Required Delivery Date": item.REQ_DEL_DATE,
-          "Material Description": item.MATERIAL_DECRIPTION,
-          "Sales Unit": item.SALES_UNIT  
-        }));
 
         return res.json({
           status: 'S',
-          data: filteredItemList
+          data: itemList
         });
-
-
-        // return res.json({
-        //   status: 'S',
-        //   data: itemList
-        // });
-
 
       } catch (parseError) {
         console.error('❌ Data Extract Error:', parseError);
@@ -110,7 +78,7 @@ exports.getSalesOrderData = async (req, res) => {
     console.error('❌ SOAP Request Error:', error.response ? error.response.data : error.message);
     return res.status(500).json({
       status: 'E',
-      message: 'Failed to retrieve customer sales order list'
+      message: 'Failed to retrieve customer credit/debit memo list'
     });
   }
 };

@@ -1,0 +1,43 @@
+<app-sidebar-nav></app-sidebar-nav>
+
+<h2 class="title">Financial Sheet</h2>
+
+<div class="card-container">
+
+  <article class="card" >
+    <div class="card-image" >
+      <img src="https://i.pinimg.com/736x/bb/dc/05/bbdc05989b56587d4dcdbedc781e03d6.jpg" alt="Invoice Details">
+    </div>
+    <div class="card-content">
+      <span class="card-label">INVOICE DETAILS</span>
+    </div>
+  </article>
+
+  <article class="card" (click)="navigateTo('payment-aging')">
+    <div class="card-image" >
+      <img src="https://i.pinimg.com/736x/76/e7/31/76e73137d60cf8a9374e5a337959503e.jpg" alt="Payments and Aging">
+    </div>
+    <div class="card-content">
+      <span class="card-label">PAYMENTS DETAILS</span>
+    </div>
+  </article>
+
+  <article class="card" (click)="navigateTo('credit-debit-memo')">
+    <div class="card-image">
+      <img src="https://i.pinimg.com/736x/06/c7/89/06c7897540656b9af97616fff8d1a425.jpg" alt="Credit/Debit Memo">
+    </div>
+    <div class="card-content">
+      <span class="card-label">CREDIT/DEBIT MEMO</span>
+    </div>
+  </article>
+
+  <article class="card" (click)="navigateTo('overall-sales')">
+    <div class="card-image">
+      <img src="https://i.pinimg.com/736x/b4/1e/d1/b41ed10362ef96c36e7b1058a6b5ec78.jpg" alt="Overall Sales Data">
+    </div>
+    <div class="card-content">
+      <span class="card-label">OVERALL SALES DATA</span>
+    </div>
+  </article>
+
+</div>

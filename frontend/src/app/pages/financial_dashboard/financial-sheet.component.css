@@ -1,0 +1,151 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  /*========== Colors ==========*/
+  --first-color: hsl(52, 100%, 50%);
+  --black-color: hsl(248, 24%, 10%);
+  --white-color: #ffffff;
+  --body-color: hsl(248, 100%, 99%);
+  /*========== Font and typography ==========*/
+  --body-font: "Poppins", sans-serif;
+  --small-font-size: .813rem;
+}
+@media screen and (min-width: 1024px) {
+  :root {
+    --small-font-size: .875rem;
+  }
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+.title{
+  font-family: 'poppins';
+  margin-top: 50px;
+  margin-left: 200px;
+  margin-bottom: -70px;
+  font-size: 50px;
+}
+
+.card-container {
+  
+  display: flex;
+  flex-wrap: wrap;              /* Allow wrapping */
+  flex-direction: row;          /* Horizontal direction */
+  justify-content: center;      /* Center items */
+  gap: 2rem;
+  padding: 2rem;
+  box-sizing: border-box;       /* Prevent padding from causing overflow */
+  overflow-x: hidden;           /* Hide accidental overflow if needed */
+  margin: 0 auto;              /* Center the container */
+  max-width: 1200px;    
+  padding-top: 100px;       /* Set a max width for the container */
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  width: 500px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-direction: row
+}
+
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+.card-image img {
+  width: 200px;
+  height: 200px;
+  padding: 15px;
+  border-radius: 30px;
+  object-fit: cover;
+  display: block;
+}
+
+.card-content {  
+
+  padding-left: 20px;
+  justify-content: center;
+  align-items: center; 
+  text-align: center;
+}
+
+.card-label {
+  font-family: 'poppins';
+  align-items: center; 
+  font-size: 25px;
+  font-weight: 600;
+  color: #333;
+}
+
+
+/* Card animation */
+@keyframes show-data {
+  50% {
+    transform: translateY(-10rem);
+  }
+  100% {
+    transform: translateY(-7rem);
+  }
+}
+
+@keyframes remove-overflow {
+  to {
+    overflow: initial;
+  }
+}
+
+@keyframes remove-data {
+  0% {
+    transform: translateY(-7rem);
+  }
+  50% {
+    transform: translateY(-10rem);
+  }
+  100% {
+    transform: translateY(.5rem);
+  }
+}
+
+@keyframes show-overflow {
+  0% {
+    overflow: initial;
+    pointer-events: none;
+  }
+  50% {
+    overflow: hidden;
+  }
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For small devices */
+@media screen and (max-width: 340px) {
+  .container {
+    margin-inline: 1rem;
+  }
+
+}
+
+@media screen and (min-width: 1120px) {
+  .container {
+    height: 100vh;
+  }
+
+}

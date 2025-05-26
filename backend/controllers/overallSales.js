@@ -1,7 +1,7 @@
 const axios = require('axios');
 const xml2js = require('xml2js');
 
-exports.getSalesOrderData = async (req, res) => {
+exports.getOverallSalesData = async (req, res) => {
   const customer_id = req.body.username?.trim();
 
   if (!customer_id) {
@@ -74,27 +74,27 @@ exports.getSalesOrderData = async (req, res) => {
         //   BKPF: item.BKPF
         // }));
 
-        const filteredItemList = itemList.map(item => ({
+        // const filteredItemList = itemList.map(item => ({
 
-          "Sales Doc Number": item.SALES_DOC_NUMBER,
-          "Material Available Date": item.MATERIAL_AVAILABLE_DATE,
-          "Order Quantity": item.ORDER_QUANTITY,
-          "Sales Org": item.SALES_ORG,
-          "Required Delivery Date": item.REQ_DEL_DATE,
-          "Material Description": item.MATERIAL_DECRIPTION,
-          "Sales Unit": item.SALES_UNIT  
-        }));
-
-        return res.json({
-          status: 'S',
-          data: filteredItemList
-        });
-
+        //   "Sales Doc Number": item.SALES_DOC_NUMBER,
+        //   "Material Available Date": item.MATERIAL_AVAILABLE_DATE,
+        //   "Order Quantity": item.ORDER_QUANTITY,
+        //   "Sales Org": item.SALES_ORG,
+        //   "Required Delivery Date": item.REQ_DEL_DATE,
+        //   "Material Description": item.MATERIAL_DECRIPTION,
+        //   "Sales Unit": item.SALES_UNIT  
+        // }));
 
         // return res.json({
         //   status: 'S',
-        //   data: itemList
+        //   data: filteredItemList
         // });
+
+
+        return res.json({
+          status: 'S',
+          data: itemList
+        });
 
 
       } catch (parseError) {
