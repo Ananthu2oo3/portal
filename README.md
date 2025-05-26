@@ -10,6 +10,8 @@ PROFILE_URL  = "SOAP_access_url_profile"
 INQUIRY_URL  = "SOAP_access_url_inquiry"
 DELIVERY_URL = "SOAP_access_url_inquiry"
 SALES_ORDER_URL = "SOAP_access_url_inquiry"
+CREDIT_DEBIT_URL = "SOAP_access_url_inquiry"
+PAYMENT_AGING_URL = "SOAP_access_url_inquiry"
 
 
 ## Run Frontend
