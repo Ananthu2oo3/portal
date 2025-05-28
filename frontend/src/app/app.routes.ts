@@ -11,7 +11,6 @@ export const routes: Routes = [
   { path: 'accounts', loadComponent: () => import('./pages/accounts/accounts.component').then(m => m.AccountsComponent) },
   { path: 'customer-dashboard', loadComponent: () => import('./pages/customer_dashboard/customer-dashboard.component').then(m => m.CustomerDashboardComponent) },
   { path: 'financial-sheet', loadComponent: () => import('./pages/financial_dashboard/financial-sheet.component').then(m => m.FinancialSheetComponent) },
-  { path: 'logout', loadComponent: () => import('./pages/logout/logout.component').then(m => m.LogoutComponent) },
 
   { path: 'inquiry-data', loadComponent: () => import('./pages/customer_inquiry/inquiry.component').then(m => m.InquirdData) },
   { path: 'delivery-data', loadComponent: () => import('./pages/customer_delivery/delivery.component').then(m => m.DeliveryDataComponent) },

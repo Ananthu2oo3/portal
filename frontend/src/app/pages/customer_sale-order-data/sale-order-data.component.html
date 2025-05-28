@@ -1,7 +1,15 @@
 <app-sidebar-nav></app-sidebar-nav>
 
+
+
 <div class="container">
+  <div class="header-row">
   <h2 class="title">Sales Order Data</h2>
+  <button class="download-button" (click)="downloadExcel()" [disabled]="!salesOrderList.length">
+    Download as Excel
+  </button>
+</div>
+
   
   <div *ngIf="loading">Loading...</div>
   <div *ngIf="error" class="error">{{ error }}</div>

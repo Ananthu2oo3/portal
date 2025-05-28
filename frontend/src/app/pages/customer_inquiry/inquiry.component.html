@@ -1,11 +1,18 @@
 <app-sidebar-nav></app-sidebar-nav>
 
 <div class="container">
+<div class="container">
+  <div class="header-row">
   <h2 class="title">Inquiry Data</h2>
+  <button class="download-button" (click)="downloadExcel()" [disabled]="!customerData.length">
+    Download as Excel
+  </button>
+</div>
+
 
   <div *ngIf="loading">Loading...</div>
   <div *ngIf="error" class="error">{{ error }}</div>
-
+<div class="table-wrapper">
   <table *ngIf="customerData.length" class="styled-table">
     <thead>
       <tr>
@@ -18,8 +25,10 @@
       </tr>
     </tbody>
   </table>
+  </div>
 
   <div *ngIf="!loading && !customerData.length && !error">
     No data available.
   </div>
+
 </div>

@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
 
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
 @Component({
   selector: 'app-accounts',
   standalone: true,
@@ -10,6 +13,7 @@ import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
   templateUrl: './inquiry.component.html',
   styleUrl: './inquiry.component.css'
 })
+
 export class InquirdData {
   private http = inject(HttpClient);
 
@@ -19,10 +23,10 @@ export class InquirdData {
   loading = false;
 
   ngOnInit() {
-    this.fetchCustomerProfile();
+    this.fetchInquiryData();
   }
 
-  fetchCustomerProfile() {
+  fetchInquiryData() {
     this.loading = true;
     const username = localStorage.getItem('username');
 
@@ -48,4 +52,23 @@ export class InquirdData {
       }
     });
   }
+
+  downloadExcel(): void {
+  if (!this.customerData.length) return;
+
+  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.customerData);
+  const workbook: XLSX.WorkBook = {
+    Sheets: { data: worksheet },
+    SheetNames: ['data']
+  };
+  const excelBuffer: any = XLSX.write(workbook, {
+    bookType: 'xlsx',
+    type: 'array'
+  });
+  const blob: Blob = new Blob([excelBuffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
+  });
+  FileSaver.saveAs(blob, 'inquiry_data.xlsx');
+}
+
 }

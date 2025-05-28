@@ -20,4 +20,9 @@ export class SidebarNavComponent {
         this.currentRoute = event.urlAfterRedirects;
       });
   }
+
+  logout() {
+    localStorage.removeItem('username'); // or localStorage.clear();
+    this.router.navigate(['/']); // or '/' depending on your route
+  }
 }

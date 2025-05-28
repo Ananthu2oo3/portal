@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
 
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
+
 @Component({
   selector: 'app-financial-payment-aging',
   imports: [CommonModule, SidebarNavComponent],
@@ -47,4 +51,23 @@ export class FinancialPaymentAgingComponent {
       }
     });
   }
+
+    downloadExcel(): void {
+  if (!this.salesOrderList.length) return;
+
+  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.salesOrderList);
+  const workbook: XLSX.WorkBook = {
+    Sheets: { data: worksheet },
+    SheetNames: ['data']
+  };
+  const excelBuffer: any = XLSX.write(workbook, {
+    bookType: 'xlsx',
+    type: 'array'
+  });
+  const blob: Blob = new Blob([excelBuffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
+  });
+  FileSaver.saveAs(blob, 'inquiry_data.xlsx');
+}
+
 }
