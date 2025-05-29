@@ -20,6 +20,9 @@ export const routes: Routes = [
   { path: 'overall-sales', loadComponent: () => import('./pages/financial_overall_sales/finance-overall-sales.component').then(m => m.FinanceOverallSalesComponent) },
   { path: 'credit-debit-memo', loadComponent: () => import('./pages/financial_debit_memo/financial_debit_memo.component').then(m => m.CreditDebitMemoComponent) },
   { path: 'payment-aging', loadComponent: () => import('./pages/financial_payment_aging/financial-payment-aging.component').then(m => m.FinancialPaymentAgingComponent) },
+  { path: 'financial-invoice', loadComponent: () => import('./pages/financial-invoice/financial-invoice.component').then(m => m.FinancialInvoiceComponent) },
+
+  { path: 'aboutus', loadComponent: () => import('./map/map.component').then(m => m.AboutComponent) },
 
 ];
 

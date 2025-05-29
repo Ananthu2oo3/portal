@@ -1,0 +1,35 @@
+<app-sidebar-nav></app-sidebar-nav>
+
+<div class="container">
+  <div class="header-row">
+  <h2 class="title">Invoice</h2>
+  <button class="download-button1" (click)="downloadExcel()" [disabled]="!salesOrderList.length">
+    Download as Excel
+  </button>
+
+  <button class="download-button1" (click)="viewPDF()">View Invoice PDF</button>
+<button class="download-button1" (click)="downloadPDF()">Download Invoice PDF</button>
+
+</div>
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="table-wrapper">
+  <table *ngIf="salesOrderList.length" class="styled-table">
+
+    <thead>
+      <tr>
+        <th *ngFor="let key of fieldKeys">{{ key }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of salesOrderList">
+        <td *ngFor="let key of fieldKeys">{{ item[key] || 'N/A' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div *ngIf="!loading && !salesOrderList.length && !error">
+    No data available.
+  </div>
+</div>

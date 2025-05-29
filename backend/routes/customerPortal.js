@@ -9,6 +9,7 @@ const { getSalesOrderData } = require('../controllers/salesOrderData');
 const { getOverallSalesData } = require('../controllers/overallSales');
 const { getCreditDebitData } = require('../controllers/creditDebitMemo');
 const { getPaymentAgingData } = require('../controllers/paymentAging')
+const { getInvoiceData } = require('../controllers/invoice');
 
 router.post('/login', handleLogin);
 router.post('/customer-profile', getCustomerProfile);
@@ -18,5 +19,6 @@ router.post("/sales-order-data", getSalesOrderData)
 router.post("/overall-sales", getOverallSalesData);
 router.post("/credit-debit-memo", getCreditDebitData);
 router.post("/payment-aging", getPaymentAgingData)
+router.post("/invoice-data", getInvoiceData);
 
 module.exports = router;
