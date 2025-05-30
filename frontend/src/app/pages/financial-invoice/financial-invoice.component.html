@@ -3,14 +3,11 @@
 <div class="container">
   <div class="header-row">
   <h2 class="title">Invoice</h2>
-  <button class="download-button1" (click)="downloadExcel()" [disabled]="!salesOrderList.length">
-    Download as Excel
-  </button>
-
-  <button class="download-button1" (click)="viewPDF()">View Invoice PDF</button>
-<button class="download-button1" (click)="downloadPDF()">Download Invoice PDF</button>
-
+  <button class="download-button1" (click)="downloadExcel()" [disabled]="!salesOrderList.length">Download as Excel</button>
+  <button class="download-button2" (click)="viewPDF()">View Invoice PDF</button>
+  <!-- <button class="download-button" (click)="downloadPDF()">Download Invoice PDF</button> -->
 </div>
+
   <div *ngIf="loading">Loading...</div>
   <div *ngIf="error" class="error">{{ error }}</div>
 
