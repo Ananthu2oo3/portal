@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-const { handleLogin } = require('../controllers/loginController');
-const { getCustomerProfile } = require('../controllers/customerProfileController');
-const { getInquiryData } = require('../controllers/inquiryData');
-const { getDeliveryData } = require('../controllers/delivery');
-const { getSalesOrderData } = require('../controllers/salesOrderData');
-const { getOverallSalesData } = require('../controllers/overallSales');
-const { getCreditDebitData } = require('../controllers/creditDebitMemo');
-const { getPaymentAgingData } = require('../controllers/paymentAging')
-const { getInvoiceData } = require('../controllers/invoice');
+// Customer Portal Routes
+
+const { handleLogin } = require('../controllers/customer/loginController.js');
+const { getCustomerProfile } = require('../controllers/customer/customerProfileController.js');
+const { getInquiryData } = require('../controllers/customer/inquiryData.js');
+const { getDeliveryData } = require('../controllers/customer/delivery.js');
+const { getSalesOrderData } = require('../controllers/customer/salesOrderData.js');
+const { getOverallSalesData } = require('../controllers/customer/overallSales.js');
+const { getCreditDebitData } = require('../controllers/customer/creditDebitMemo.js');
+const { getPaymentAgingData } = require('../controllers/customer/paymentAging.js')
+const { getInvoiceData } = require('../controllers/customer/invoice.js');
 
 router.post('/login', handleLogin);
 router.post('/customer-profile', getCustomerProfile);
@@ -20,5 +22,14 @@ router.post("/overall-sales", getOverallSalesData);
 router.post("/credit-debit-memo", getCreditDebitData);
 router.post("/payment-aging", getPaymentAgingData)
 router.post("/invoice-data", getInvoiceData);
+
+
+// Vendor Portal Routes
+
+const { getVendorProfile } = require('../controllers/vendor/vendorProfile.js');
+
+router.get("/vendor-profile", getVendorProfile);
+
+
 
 module.exports = router;

@@ -11,7 +11,7 @@ exports.getCreditDebitData = async (req, res) => {
     });
   }
 
-  // Ensure customer_id is a 10-digit string with leading zeros
+
   customer_id = customer_id.padStart(10, '0');
   console.log('📥 Formatted customer_id:', customer_id);
 

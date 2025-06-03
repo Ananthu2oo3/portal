@@ -13,9 +13,10 @@ import * as FileSaver from 'file-saver';
   templateUrl: './financial-payment-aging.component.html',
   styleUrl: './financial-payment-aging.component.css'
 })
-export class FinancialPaymentAgingComponent {
-    private http = inject(HttpClient);
 
+export class FinancialPaymentAgingComponent {
+  
+  private http = inject(HttpClient);
   salesOrderList: any[] = [];
   fieldKeys: string[] = [];
   error: string = '';
