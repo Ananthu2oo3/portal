@@ -7,9 +7,8 @@ export const routes: Routes = [
   // Home Routes
 
   { path: 'customer-login', loadComponent: () => import('./home/login_customer/customer.component').then(m => m.LoginComponent) },
-  { path: 'vendor-login', loadComponent: () => import('./home/login_vendor/vendor.component').then(m => m.VendorComponent) },
+  { path: 'vendor-login', loadComponent: () => import('./home/login_vendor/login_vendor.component').then(m => m.VendorLoginComponent) },
   { path: 'employee-login', loadComponent: () => import('./home/login_employee/employee.component').then(m => m.EmployeeComponent) },
-
 
 
   // Customer Routes
@@ -30,7 +29,11 @@ export const routes: Routes = [
 
   // Vendor Routes
 
-  // { path: 'vendor-dashboard', loadComponent: () => import('./vendor/vendor_dashboard/vendor-dashboard.component').then(m => m.VendorDashboardComponent) },
   { path: 'vendor-profile', loadComponent: () => import('./vendor/vendor-profile/vendor-profile.component').then(m => m.VendorProfileComponent) },
+  { path: 'vendor-dashboard', loadComponent: () => import('./vendor/vendor-dashboard/vendor-dashboard.component').then(m => m.VendorDashboardComponent) },
+  
+  
+  // { path: 'quatation-request', loadComponent: () => import('./vendor/vendor-quotation-request/vendor-quotation-request.component').then(m => m.VendorQuotationRequestComponent) },
+  { path: 'goods-receipt', loadComponent: () => import('./vendor/vendor-goods-receipt/vendor-goods-receipt.component').then(m => m.VendorQuotationRequestComponent) },
 ];
   

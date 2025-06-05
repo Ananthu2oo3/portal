@@ -26,9 +26,14 @@ router.post("/invoice-data", getInvoiceData);
 
 // Vendor Portal Routes
 
+const { handleVendorLogin } = require('../controllers/vendor/VendorLogin.js');
 const { getVendorProfile } = require('../controllers/vendor/vendorProfile.js');
+const { getGoodsReceipt } = require('../controllers/vendor/goodsRequest.js');
 
+router.get('/vendor-login', handleVendorLogin);
 router.get("/vendor-profile", getVendorProfile);
+router.get("/goods-receipt", getGoodsReceipt);
+
 
 
 

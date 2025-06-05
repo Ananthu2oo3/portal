@@ -10,6 +10,7 @@ const Route = require('./routes/customerPortal');
 const app = express();
 app.use(cors({
   origin: 'http://localhost:4200',
+  methods: ['GET', 'POST'],
   credentials: true
 }));
 

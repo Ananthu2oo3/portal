@@ -1,0 +1,32 @@
+<app-sidebar-nav></app-sidebar-nav>
+
+<div class="container">
+  <div class="header-row">
+  <h2 class="title">Goods Receipt</h2>
+  <button class="download-button" (click)="downloadExcel()" [disabled]="!vendorData.length">
+    Download as Excel
+  </button>
+</div>
+
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+<div class="table-wrapper">
+  
+  <table *ngIf="vendorData.length" class="styled-table">
+    <thead>
+      <tr>
+        <th *ngFor="let key of vendorDataKeys">{{ key }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of vendorData">
+        <td *ngFor="let key of vendorDataKeys">{{ item[key] || 'N/A' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div *ngIf="!loading && !vendorData.length && !error">
+    No data available.
+  </div>
+</div>
