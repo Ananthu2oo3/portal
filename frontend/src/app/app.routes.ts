@@ -31,9 +31,13 @@ export const routes: Routes = [
 
   { path: 'vendor-profile', loadComponent: () => import('./vendor/vendor-profile/vendor-profile.component').then(m => m.VendorProfileComponent) },
   { path: 'vendor-dashboard', loadComponent: () => import('./vendor/vendor-dashboard/vendor-dashboard.component').then(m => m.VendorDashboardComponent) },
+  { path: 'vendor-financial-sheet', loadComponent: () => import('./vendor/financial_dashboard/financial-sheet.component').then(m => m.VendorFinancialSheetComponent) },
   
-  
-  // { path: 'quatation-request', loadComponent: () => import('./vendor/vendor-quotation-request/vendor-quotation-request.component').then(m => m.VendorQuotationRequestComponent) },
+  { path: 'request-quotation', loadComponent: () => import('./vendor/vendor-quotation-request/vendor-quotation-request.component').then(m => m.VendorQuotationRequestComponent) },
+  { path: 'purchase-order', loadComponent: () => import('./vendor/vendor-purchase-order/vendor-purchase-order.component').then(m => m.VendorPurchaseOrderComponent) },
   { path: 'goods-receipt', loadComponent: () => import('./vendor/vendor-goods-receipt/vendor-goods-receipt.component').then(m => m.VendorQuotationRequestComponent) },
+
+  { path: 'vendor-credit-debit-memo', loadComponent: () => import('./vendor/financial-credit_debit/financial-credit_debit.component').then(m => m.FinancialCreditDebitComponent) },
+  { path: 'vendor-payment-aging', loadComponent: () => import('./vendor/financial-payment-aging/financial-payment-aging.component').then(m => m.FinancialPaymentAgingComponent) },
 ];
   

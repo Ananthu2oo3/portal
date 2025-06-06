@@ -1,10 +1,11 @@
 const axios = require('axios');
 const xml2js = require('xml2js');
 
-exports.handleVendorLogin = async (req, res) => {
+exports.getVendorLogin = async (req, res) => {
   console.log('🔵 [1] Received vendor login request');
 
-  const { username, password } = req.query;
+  const { username, password } = req.body;
+
   console.log('🔵 [2] Extracted credentials:', { username, password });
 
   const fullUrl = `${process.env.VENDOR_LOGIN}(VendorId='${username}',VendorPassword='${password}')?$format=xml`;
@@ -39,11 +40,7 @@ exports.handleVendorLogin = async (req, res) => {
         console.log('🧩 [5] Parsed SAP Data:', { vendorId, status });
 
         return res.status(200).json({
-          status: 'SUCCESS',
-          data: {
-            vendorId,
-            loginStatus: status
-          }
+            status: status
         });
 
       } catch (parseError) {

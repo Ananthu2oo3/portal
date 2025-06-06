@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-exports.getGoodsReceipt = async (req, res) => {
+exports.getCreditDebitMemo = async (req, res) => {
   const vendorNo = req.body.username;
   
 
@@ -8,9 +8,9 @@ exports.getGoodsReceipt = async (req, res) => {
     return res.status(400).json({ status: 'ERROR', message: 'VendorNo is required as a query parameter' });
   }
 
-  console.log('🔵 [1] Fetching goods request for VendorNo:', vendorNo);
+  console.log('🔵 [1] Fetching data for VendorNo:', vendorNo);
 
-  const url = `${process.env.GOODS_RECEIPT_URL}?$filter=VendorNo eq'${vendorNo}'`;
+  const url = `${process.env.CREDIT_DEBIT_MEMO}?$filter=VendorNo eq'${vendorNo}'`;
 
 
   const headers = {
@@ -25,7 +25,7 @@ exports.getGoodsReceipt = async (req, res) => {
       maxBodyLength: Infinity
     });
 
-    console.log('🟢 [2] Goods request data retrieved');
+    console.log('🟢 [2] data retrieved');
 
     const goodsData = response.data?.d?.results || [];
 
@@ -49,7 +49,7 @@ exports.getGoodsReceipt = async (req, res) => {
     res.json({ status: 'SUCCESS', data: cleanedData });
 
   } catch (error) {
-    console.error('🔴 [3] Error retrieving goods request:', error.response ? error.response.data : error.message);
-    res.status(500).json({ status: 'ERROR', message: 'Failed to retrieve goods request data' });
+    console.error('🔴 [3] Error retrieving data:', error.response ? error.response.data : error.message);
+    res.status(500).json({ status: 'ERROR', message: 'Failed to retrieve data' });
   }
 };

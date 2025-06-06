@@ -7,14 +7,15 @@ import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 
 @Component({
-  selector: 'app-vendor-quotation-request',
   standalone: true,
+  selector: 'app-vendor-quotation-request',
   imports: [CommonModule, SidebarNavComponent],
-  templateUrl: './vendor-goods-receipt.component.html',
-  styleUrls: ['./vendor-goods-receipt.component.css']
+  templateUrl: './vendor-quotation-request.component.html',
+  styleUrl: './vendor-quotation-request.component.css'
 })
-export class VendorQuotationRequestComponent implements OnInit {
-  vendorData: any[] = [];
+export class VendorQuotationRequestComponent {
+
+vendorData: any[] = [];
   vendorDataKeys: string[] = [];
   error: string = '';
   loading: boolean = false;
@@ -41,7 +42,7 @@ export class VendorQuotationRequestComponent implements OnInit {
 
     const body = { username: vendorId }; 
 
-    this.http.post<any>('http://localhost:3000/api/goods-receipt', body).subscribe({
+    this.http.post<any>('http://localhost:3000/api/request-quotation', body).subscribe({
       next: (res) => {
         this.loading = false;
         if (res.status === 'SUCCESS' && Array.isArray(res.data) && res.data.length > 0) {
@@ -77,3 +78,4 @@ export class VendorQuotationRequestComponent implements OnInit {
     FileSaver.saveAs(blob, 'goods_receipt_data.xlsx');
   }
 }
+

@@ -23,16 +23,18 @@ export class VendorLoginComponent {
     this.loading = true;
     this.message = '';
 
-    const params = new HttpParams()
-      .set('username', this.username)
-      .set('password', this.password);
+  const body = {
+    username: this.username,
+    password: this.password
+  };
 
-    this.http.get<any>('http://localhost:3000/api/vendor-login', { params }).subscribe({
+    this.http.post<any>('http://localhost:3000/api/vendor-login', body).subscribe({
       next: (response) => {
         this.loading = false;
         if (response.status === 'SUCCESS') {
-          localStorage.setItem('username', this.username);
-          this.message = `✅ Login successful! Vendor ID: ${response.data.vendorId}`;
+        const paddedUsername = this.username.padStart(10, '0'); 
+        localStorage.setItem('username', paddedUsername);
+
           this.router.navigate(['/vendor-dashboard']);
         } else {
           this.message = '❌ Login failed!';

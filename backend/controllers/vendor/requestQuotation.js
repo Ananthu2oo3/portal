@@ -1,17 +1,16 @@
 const axios = require('axios');
 
-exports.getGoodsReceipt = async (req, res) => {
-  const vendorNo = req.body.username;
-  
+exports.getRequestQuotation = async (req, res) => {
+  const vendor = req.body.username;
 
-  if (!vendorNo) {
-    return res.status(400).json({ status: 'ERROR', message: 'VendorNo is required as a query parameter' });
+  if (!vendor) {
+    return res.status(400).json({ status: 'ERROR', message: 'Username (vendor) is required in request body' });
   }
 
+  const vendorNo = vendor.padStart(10, '0');
   console.log('🔵 [1] Fetching goods request for VendorNo:', vendorNo);
 
-  const url = `${process.env.GOODS_RECEIPT_URL}?$filter=VendorNo eq'${vendorNo}'`;
-
+  const url = `${process.env.QUOTATION_REQUEST}?$filter=VendorNo eq '${vendorNo}'`;
 
   const headers = {
     'Accept': 'application/json',
@@ -27,16 +26,15 @@ exports.getGoodsReceipt = async (req, res) => {
 
     console.log('🟢 [2] Goods request data retrieved');
 
-    const goodsData = response.data?.d?.results || [];
+    const quotationRequest = response.data?.d?.results || [];
 
     // 🧹 Clean the data by removing __metadata and formatting dates
-    const cleanedData = goodsData.map(entry => {
+    const cleanedData = quotationRequest.map(entry => {
       const { __metadata, ...rest } = entry;
 
-      // Optional: Convert SAP date string to readable format
       const formatSAPDate = (sapDate) => {
         const timestamp = parseInt(sapDate?.match(/\d+/)?.[0] || '0');
-        return new Date(timestamp).toISOString().split('T')[0]; 
+        return timestamp ? new Date(timestamp).toISOString().split('T')[0] : null;
       };
 
       return {
@@ -49,7 +47,7 @@ exports.getGoodsReceipt = async (req, res) => {
     res.json({ status: 'SUCCESS', data: cleanedData });
 
   } catch (error) {
-    console.error('🔴 [3] Error retrieving goods request:', error.response ? error.response.data : error.message);
+    console.error('🔴 [3] Error retrieving goods request:', error.response?.data || error.message);
     res.status(500).json({ status: 'ERROR', message: 'Failed to retrieve goods request data' });
   }
 };

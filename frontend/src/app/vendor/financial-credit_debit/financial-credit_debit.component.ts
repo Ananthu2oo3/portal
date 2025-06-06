@@ -7,14 +7,16 @@ import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 
 @Component({
-  selector: 'app-vendor-quotation-request',
   standalone: true,
+  selector: 'app-vendor-purchase-order',
   imports: [CommonModule, SidebarNavComponent],
-  templateUrl: './vendor-goods-receipt.component.html',
-  styleUrls: ['./vendor-goods-receipt.component.css']
+  templateUrl: './financial-credit_debit.component.html',
+  styleUrl: './financial-credit_debit.component.css'
 })
-export class VendorQuotationRequestComponent implements OnInit {
-  vendorData: any[] = [];
+
+export class FinancialCreditDebitComponent {
+
+vendorData: any[] = [];
   vendorDataKeys: string[] = [];
   error: string = '';
   loading: boolean = false;
@@ -22,10 +24,10 @@ export class VendorQuotationRequestComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.fetchGoodsReceipt();
+    this.fetchCredirDebitMemo();
   }
 
-  fetchGoodsReceipt() {
+  fetchCredirDebitMemo() {
     this.loading = true;
     this.error = '';
     this.vendorData = [];
@@ -41,7 +43,7 @@ export class VendorQuotationRequestComponent implements OnInit {
 
     const body = { username: vendorId }; 
 
-    this.http.post<any>('http://localhost:3000/api/goods-receipt', body).subscribe({
+    this.http.post<any>('http://localhost:3000/api/vendor-credit-debit-memo', body).subscribe({
       next: (res) => {
         this.loading = false;
         if (res.status === 'SUCCESS' && Array.isArray(res.data) && res.data.length > 0) {
@@ -77,3 +79,4 @@ export class VendorQuotationRequestComponent implements OnInit {
     FileSaver.saveAs(blob, 'goods_receipt_data.xlsx');
   }
 }
+

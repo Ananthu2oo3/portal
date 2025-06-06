@@ -1,8 +1,13 @@
 const axios = require('axios');
-const xml2js = require('xml2js'); 
+const xml2js = require('xml2js');
 
 exports.getVendorProfile = async (req, res) => {
-  const vendorId = req.params.vendorId || '100001'; 
+  const vendorId = req.body.username;
+
+  if (!vendorId) {
+    return res.status(400).json({ status: 'ERROR', message: 'Username (vendor ID) is required in request body' });
+  }
+
   console.log('🔵 [1] Fetching vendor profile for ID:', vendorId);
 
   const url = `${process.env.VENDOR_PROFILE_URL}('${vendorId}')?$format=xml`;
@@ -21,17 +26,17 @@ exports.getVendorProfile = async (req, res) => {
 
     console.log('🟢 [2] Vendor profile XML retrieved');
 
-
     xml2js.parseString(response.data, { explicitArray: false }, (err, result) => {
       if (err) {
         console.error('🔴 [3] Error parsing XML:', err);
         return res.status(500).json({ status: 'ERROR', message: 'Failed to parse XML' });
       }
 
-      // ✅ Extract the needed vendor data from the parsed result
-      const vendorData = result.entry.content['m:properties'];
+      const vendorData = result.entry?.content?.['m:properties'];
+      if (!vendorData) {
+        return res.status(404).json({ status: 'ERROR', message: 'Vendor data not found in response' });
+      }
 
-      // Rename keys to cleaner format (optional)
       const cleanData = {
         vendorId: vendorData['d:VendorId'],
         vendorName: vendorData['d:VendorName'],
@@ -48,7 +53,7 @@ exports.getVendorProfile = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('🔴 [3] Error retrieving vendor profile:', error.response ? error.response.data : error.message);
+    console.error('🔴 [3] Error retrieving vendor profile:', error.response?.data || error.message);
     res.status(500).json({ status: 'ERROR', message: 'Failed to retrieve vendor profile' });
   }
 };

@@ -5,14 +5,11 @@ import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
 
 @Component({
   selector: 'app-vendor-profile',
-  // standalone: true,
   imports: [CommonModule, SidebarNavComponent],
   templateUrl: './vendor-profile.component.html',
-  styleUrl: './vendor-profile.component.css'
+  styleUrls: ['./vendor-profile.component.css'] 
 })
-
-export class VendorProfileComponent implements OnInit{
-
+export class VendorProfileComponent implements OnInit {
   private http = inject(HttpClient);
   vendorData: any = null;
   vendorDataKeys: string[] = [];
@@ -25,17 +22,15 @@ export class VendorProfileComponent implements OnInit{
 
   fetchVendorProfile() {
     this.loading = true;
-    console.log('Fetching vendor profile...');
-
-    const vendorId = '100001';  // Replace with actual logic if needed
+    const vendorId = localStorage.getItem('username');
 
     if (!vendorId) {
-      this.error = 'Vendor ID not found';
+      this.error = 'Vendor ID not found in localStorage';
       this.loading = false;
       return;
     }
 
-    this.http.get<any>(`http://localhost:3000/api/vendor-profile/`).subscribe({
+    this.http.post<any>('http://localhost:3000/api/vendor-profile', { username: vendorId }).subscribe({
       next: (res) => {
         if (res.status === 'SUCCESS') {
           this.vendorData = res.data;
