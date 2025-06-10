@@ -39,5 +39,6 @@ export const routes: Routes = [
 
   { path: 'vendor-credit-debit-memo', loadComponent: () => import('./vendor/financial-credit_debit/financial-credit_debit.component').then(m => m.FinancialCreditDebitComponent) },
   { path: 'vendor-payment-aging', loadComponent: () => import('./vendor/financial-payment-aging/financial-payment-aging.component').then(m => m.FinancialPaymentAgingComponent) },
+  { path: 'vendor-invoice', loadComponent: () => import('./vendor/financial-vendor-innvoice/financial-vendor-innvoice.component').then(m => m.FinancialVendorInnvoiceComponent) }
 ];
   

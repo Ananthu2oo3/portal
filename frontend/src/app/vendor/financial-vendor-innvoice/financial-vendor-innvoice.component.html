@@ -1,0 +1,84 @@
+<!-- <app-sidebar-nav></app-sidebar-nav>
+
+<div class="container">
+  <div class="header-row">
+  <h2 class="title">Invoice</h2>
+  <button class="download-button" (click)="downloadExcel()" [disabled]="!vendorData.length">
+    Download as Excel
+  </button>
+</div>
+
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+<div class="table-wrapper">
+  
+  <table *ngIf="vendorData.length" class="styled-table">
+    <thead>
+      <tr>
+        <th *ngFor="let key of vendorDataKeys">{{ key }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of vendorData">
+        <td *ngFor="let key of vendorDataKeys">{{ item[key] || 'N/A' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div *ngIf="!loading && !vendorData.length && !error">
+    No data available.
+  </div>
+</div> -->
+
+
+<app-sidebar-nav></app-sidebar-nav>
+
+<div class="container">
+  <div class="header-row">
+    <h2 class="title">Invoice</h2>
+
+    <div class="button-group">
+      <button class="download-button" (click)="downloadExcel()" [disabled]="!vendorData.length">
+        Download as Excel
+      </button>
+
+      <button class="download-button"
+              (click)="downloadSelectedInvoice()"
+              [disabled]="!selectedRow">
+        Download Selected Invoice
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="table-wrapper">
+    <table *ngIf="vendorData.length" class="styled-table">
+      <thead>
+        <tr>
+          <th>Select</th>
+          <th *ngFor="let key of vendorDataKeys">{{ key }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of vendorData">
+          <td>
+            <input
+              type="radio"
+              name="selectedRow"
+              (change)="selectRow(item)"
+              [checked]="selectedRow === item"
+            />
+          </td>
+          <td *ngFor="let key of vendorDataKeys">{{ item[key] || 'N/A' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!loading && !vendorData.length && !error">
+    No data available.
+  </div>
+</div>

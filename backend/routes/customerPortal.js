@@ -33,6 +33,8 @@ const { getRequestQuotation }   = require('../controllers/vendor/requestQuotatio
 const { getPurchaseOrder }      = require('../controllers/vendor/purchaseOrder.js');
 const { getCreditDebitMemo }    = require('../controllers/vendor/creditDebitMemo.js');
 const { getPaymentAging }      = require('../controllers/vendor/paymentAging.js');
+const { getVendorInvoice }      = require('../controllers/vendor/invoice.js');
+const { downloadVendorInvoice } = require('../controllers/vendor/invoiceDownload.js');
 
 router.post('/vendor-login', getVendorLogin);
 router.post("/vendor-profile", getVendorProfile);
@@ -41,6 +43,7 @@ router.post("/request-quotation", getRequestQuotation);
 router.post("/purchase-order", getPurchaseOrder);
 router.post("/vendor-credit-debit-memo", getCreditDebitMemo);
 router.post("/vendor-payment-aging", getPaymentAging);
-
+router.post("/vendor-invoice", getVendorInvoice);
+router.post("/download-vendor-invoice", downloadVendorInvoice);
 
 module.exports = router;
