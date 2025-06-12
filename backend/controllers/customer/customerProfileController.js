@@ -34,6 +34,7 @@ exports.getCustomerProfile = async (req, res) => {
     });
 
     const xml = response.data;
+    console.log('📤 SOAP Response:', xml);
 
     const getValue = (tag) => {
       const match = xml.match(new RegExp(`<${tag}>(.*?)</${tag}>`));
@@ -57,7 +58,7 @@ exports.getCustomerProfile = async (req, res) => {
 
     res.json({
       status: 'S',
-      data: customerData
+      data: res
     });
 
   } catch (error) {

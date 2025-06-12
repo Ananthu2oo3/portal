@@ -46,4 +46,12 @@ router.post("/vendor-payment-aging", getPaymentAging);
 router.post("/vendor-invoice", getVendorInvoice);
 router.post("/download-vendor-invoice", downloadVendorInvoice);
 
+
+const { employeeLogin } = require('../controllers/employee/employee_login.js');
+const { getEmployeeProfile } = require('../controllers/employee/employeeProfile.js');
+
+
+router.post('/employee-login', employeeLogin);
+router.post('/employee-profile', getEmployeeProfile);
+
 module.exports = router;
