@@ -39,8 +39,8 @@ exports.getRequestQuotation = async (req, res) => {
 
       return {
         ...rest,
-        PostDate: formatSAPDate(rest.PostDate),
-        DocDate: formatSAPDate(rest.DocDate)
+        DocDate: formatSAPDate(rest.DocDate),
+        DeliveryDate: formatSAPDate(rest.DeliveryDate),
       };
     });
 

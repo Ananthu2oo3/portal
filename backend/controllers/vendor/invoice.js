@@ -39,8 +39,10 @@ exports.getVendorInvoice = async (req, res) => {
 
       return {
         ...rest,
-        PostDate: formatSAPDate(rest.PostDate),
-        DocDate: formatSAPDate(rest.DocDate)
+        DocDate: formatSAPDate(rest.DocDate),        
+        BaselineDate: formatSAPDate(rest.BaselineDate),
+        PostingDate: formatSAPDate(rest.PostingDate),
+        AccEntDate: formatSAPDate(rest.AccEntDate)
       };
     });
 

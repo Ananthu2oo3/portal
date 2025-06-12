@@ -39,7 +39,7 @@ exports.getPurchaseOrder = async (req, res) => {
 
       return {
         ...rest,
-        PostDate: formatSAPDate(rest.PostDate),
+        DeliveryDate: formatSAPDate(rest.DeliveryDate),
         DocDate: formatSAPDate(rest.DocDate)
       };
     });

@@ -42,6 +42,7 @@ exports.getCreditDebitMemo = async (req, res) => {
       return {
         ...rest,
         PostDate: formatSAPDate(rest.PostDate),
+        PostingDate: formatSAPDate(rest.PostingDate),
         DocDate: formatSAPDate(rest.DocDate)
       };
     });

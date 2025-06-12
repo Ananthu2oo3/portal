@@ -39,8 +39,10 @@ exports.getPaymentAging = async (req, res) => {
 
       return {
         ...rest,
-        PostDate: formatSAPDate(rest.PostDate),
-        DocDate: formatSAPDate(rest.DocDate)
+        DocDate: formatSAPDate(rest.DocDate),        
+        BaselineDate: formatSAPDate(rest.BaselineDate),
+        PostingDate: formatSAPDate(rest.PostingDate),
+        DueDate: formatSAPDate(rest.DueDate)
       };
     });
 
