@@ -49,9 +49,11 @@ router.post("/download-vendor-invoice", downloadVendorInvoice);
 
 const { employeeLogin } = require('../controllers/employee/employee_login.js');
 const { getEmployeeProfile } = require('../controllers/employee/employeeProfile.js');
+const { getEmployeeLeaveRequest } = require('../controllers/employee/empolyeeLeaverequest.js');
 
 
 router.post('/employee-login', employeeLogin);
 router.post('/employee-profile', getEmployeeProfile);
+router.post('/employee-leave-request', getEmployeeLeaveRequest);
 
 module.exports = router;
