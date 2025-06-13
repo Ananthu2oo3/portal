@@ -1,0 +1,29 @@
+<app-sidebar-nav></app-sidebar-nav>
+
+<div class="container">
+
+    <h2 class ="title">Employee Profile</h2>
+
+    <div *ngIf="loading">Loading...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <table *ngIf="customerData" class="styled-table">
+    <thead>
+        <tr>
+        <th>Field</th>
+        <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let key of customerDataKeys">
+        <td>{{ key }}</td>
+        <td>{{ customerData[key] || 'N/A' }}</td>
+        </tr>
+    </tbody>
+    </table>
+
+    <div *ngIf="!loading && !customerData && !error">
+        No data available.
+    </div>
+
+</div>

@@ -1,0 +1,32 @@
+<app-sidebar-nav></app-sidebar-nav>
+
+<div class="container">
+  <div class="header-row">
+  <h2 class="title">Delivery Data</h2>
+  <button class="download-button" (click)="downloadExcel()" [disabled]="!leaveRequest.length">
+    Download as Excel
+  </button>
+</div>
+
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+<div class="table-wrapper">
+  
+  <table *ngIf="leaveRequest.length" class="styled-table">
+    <thead>
+      <tr>
+        <th *ngFor="let key of fieldKeys">{{ key }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of leaveRequest">
+        <td *ngFor="let key of fieldKeys">{{ item[key] || 'N/A' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div *ngIf="!loading && !leaveRequest.length && !error">
+    No data available.
+  </div>
+</div>

@@ -11,6 +11,7 @@ export const routes: Routes = [
   { path: 'employee-login', loadComponent: () => import('./home/login_employee/employee.component').then(m => m.EmployeeComponent) },
 
 
+  
   // Customer Routes
 
   { path: 'accounts', loadComponent: () => import('./customer/accounts/accounts.component').then(m => m.AccountsComponent) },
@@ -27,6 +28,8 @@ export const routes: Routes = [
   { path: 'payment-aging', loadComponent: () => import('./customer/financial_payment_aging/financial-payment-aging.component').then(m => m.FinancialPaymentAgingComponent) },
   { path: 'financial-invoice', loadComponent: () => import('./customer/financial-invoice/financial-invoice.component').then(m => m.FinancialInvoiceComponent) },
 
+  
+  
   // Vendor Routes
 
   { path: 'vendor-profile', loadComponent: () => import('./vendor/vendor-profile/vendor-profile.component').then(m => m.VendorProfileComponent) },
@@ -39,6 +42,13 @@ export const routes: Routes = [
 
   { path: 'vendor-credit-debit-memo', loadComponent: () => import('./vendor/financial-credit_debit/financial-credit_debit.component').then(m => m.FinancialCreditDebitComponent) },
   { path: 'vendor-payment-aging', loadComponent: () => import('./vendor/financial-payment-aging/financial-payment-aging.component').then(m => m.FinancialPaymentAgingComponent) },
-  { path: 'vendor-invoice', loadComponent: () => import('./vendor/financial-vendor-innvoice/financial-vendor-innvoice.component').then(m => m.FinancialVendorInnvoiceComponent) }
+  { path: 'vendor-invoice', loadComponent: () => import('./vendor/financial-vendor-innvoice/financial-vendor-innvoice.component').then(m => m.FinancialVendorInnvoiceComponent) },
+
+
+  
+  // Employee Routes
+
+  {  path: 'employee-profile', loadComponent: () => import('./employee/employee-profile/employee-profile.component').then(m => m.EmployeeProfileComponent) },
+  {  path: 'employee-leave-request', loadComponent: () => import('./employee/employee-leave-request/employee-leave-request.component').then(m => m.EmployeeLeaveRequestComponent) },
 ];
   
