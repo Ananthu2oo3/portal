@@ -134,6 +134,10 @@ main {
   background-color: #fff;
 }
 
-.active-link i {
+.active-link i{
   color: rgb(250, 128, 21);
+}
+
+.active-link svg {
+  fill: rgb(250, 128, 21);
 }
