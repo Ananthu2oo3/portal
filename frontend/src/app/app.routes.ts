@@ -50,5 +50,6 @@ export const routes: Routes = [
 
   {  path: 'employee-profile', loadComponent: () => import('./employee/employee-profile/employee-profile.component').then(m => m.EmployeeProfileComponent) },
   {  path: 'employee-leave-request', loadComponent: () => import('./employee/employee-leave-request/employee-leave-request.component').then(m => m.EmployeeLeaveRequestComponent) },
+  {  path: 'employee-payslip', loadComponent: () => import('./employee/employee-pay-slip/employee-pay-slip.component').then(m => m.EmployeePaySlipComponent) }
 ];
   

@@ -1,7 +1,7 @@
 const axios = require('axios');
 const xml2js = require('xml2js');
 
-exports.getInvoiceData = async (req, res) => {
+exports.getPaySlipData = async (req, res) => {
   let customer_id = req.body.username?.trim();
 
   if (!customer_id) {
@@ -12,20 +12,21 @@ exports.getInvoiceData = async (req, res) => {
   }
 
   customer_id = customer_id.padStart(10, '0');
+  console.log('Fetching pay slip for customer_id:', customer_id);
 
   const soapEnvelope = `
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                      xmlns:urn="urn:sap-com:document:sap:rfc:functions">
-      <soapenv:Header/>
-      <soapenv:Body>
-        <urn:ZINV_AKG_FM>
-          <CUSTOMER>${customer_id}</CUSTOMER>
-        </urn:ZINV_AKG_FM>
-      </soapenv:Body>
-    </soapenv:Envelope>`;
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sap="urn:sap-com:document:sap:rfc:functions">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <sap:ZEPS_AKG_FM>
+         <IV_EMPLOYEE_ID>${customer_id}</IV_EMPLOYEE_ID>
+      </sap:ZEPS_AKG_FM>
+   </soapenv:Body>  
+</soapenv:Envelope>`;
+
 
   try {
-    const response = await axios.post(process.env.INVOICE_DATA_URL, soapEnvelope, {
+    const response = await axios.post(process.env.PAY_SLIP_URL, soapEnvelope, {
       headers: {
         'Content-Type': 'text/xml;charset=UTF-8',
         'Authorization': 'Basic ' + Buffer.from(`${process.env.SAP_USERNAME}:${process.env.SAP_PASSWORD}`).toString('base64'),
@@ -46,9 +47,9 @@ exports.getInvoiceData = async (req, res) => {
         const responseKey = Object.keys(body)[0];
         const data = body[responseKey];
         const base64PDF = data.EV_PDF_BASE64 || '';
-        const items = Array.isArray(data.ET_INVOICE_LIST?.item)
-          ? data.ET_INVOICE_LIST.item
-          : data.ET_INVOICE_LIST?.item ? [data.ET_INVOICE_LIST.item] : [];
+        const items = Array.isArray(data.IV_EMPLOYEE_LIST?.item)
+          ? data.IV_EMPLOYEE_LIST.item
+          : data.IV_EMPLOYEE_LIST?.item ? [data.IV_EMPLOYEE_LIST.item] : [];
 
         // If download=true, stream PDF directly
         if (req.query.download === 'true') {
