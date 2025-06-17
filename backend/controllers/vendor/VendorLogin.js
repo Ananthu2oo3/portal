@@ -1,11 +1,11 @@
 const axios = require('axios');
 const xml2js = require('xml2js');
+const jwt = require('jsonwebtoken');
 
 exports.getVendorLogin = async (req, res) => {
   console.log('🔵 [1] Received vendor login request');
 
   const { username, password } = req.body;
-
   console.log('🔵 [2] Extracted credentials:', { username, password });
 
   const fullUrl = `${process.env.VENDOR_LOGIN}(VendorId='${username}',VendorPassword='${password}')?$format=xml`;
@@ -24,7 +24,7 @@ exports.getVendorLogin = async (req, res) => {
     });
 
     console.log('🟢 [4] Vendor login successful');
-    
+
     // Parse XML
     xml2js.parseString(response.data, { explicitArray: false }, (err, result) => {
       if (err) {
@@ -39,9 +39,21 @@ exports.getVendorLogin = async (req, res) => {
 
         console.log('🧩 [5] Parsed SAP Data:', { vendorId, status });
 
-        return res.status(200).json({
-            status: status
-        });
+        if (status === 'SUCCESS') {
+          // ✅ Generate JWT if login is successful
+          const token = jwt.sign({ username: vendorId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+          return res.status(200).json({
+            status: status,
+            token: token
+          });
+        } else {
+          // ❌ Failed login
+          return res.status(401).json({
+            status: status,
+            message: 'Invalid credentials'
+          });
+        }
 
       } catch (parseError) {
         console.error('🔴 Failed to extract fields from parsed XML:', parseError);

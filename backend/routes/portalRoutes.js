@@ -13,7 +13,7 @@ const { getCreditDebitData }    = require('../controllers/customer/creditDebitMe
 const { getPaymentAgingData }   = require('../controllers/customer/paymentAging.js')
 const { getInvoiceData }        = require('../controllers/customer/invoice.js');
 
-router.post('/login', handleLogin);
+router.post('/customer-login', handleLogin);
 router.post('/customer-profile', getCustomerProfile);
 router.post('/inquiry-data', getInquiryData);
 router.post('/delivery-data', getDeliveryData);

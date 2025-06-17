@@ -1,4 +1,5 @@
 const axios = require('axios');
+const jwt = require('jsonwebtoken');
 
 exports.handleLogin = async (req, res) => {
   console.log('🔵 [1] Received login request');
@@ -29,18 +30,28 @@ exports.handleLogin = async (req, res) => {
     console.log('SOAP Response:', response.data);
     console.log('🟢 [3] SOAP request successful');
 
+    // Extract <STATUS> tag
     const statusMatch = response.data.match(/<STATUS>(.*?)<\/STATUS>/);
     const ev_status = statusMatch ? statusMatch[1] : 'E';
 
     if (ev_status === 'SUCCESS') {
-      req.session.username = username; 
-      console.log('🟢 [4] Session updated with username:', req.session.username);
+      const token = jwt.sign(
+        { username }, // payload
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' } // expiry
+      );
+
+      console.log('🟢 [4] JWT created:', token);
+
+      // Return status + token
+      return res.json({ status: ev_status, token });
     }
 
-    res.json({ status: ev_status });
+    // If not success => just return status
+    return res.json({ status: ev_status });
 
   } catch (error) {
     console.error('SAP Request Error:', error.response ? error.response.data : error.message);
-    res.status(500).json({ status: 'E', message: 'Error contacting SAP service.' });
+    return res.status(500).json({ status: 'E', message: 'Error contacting SAP service.' });
   }
 };
