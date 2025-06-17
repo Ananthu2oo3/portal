@@ -35,7 +35,7 @@ exports.getInquiryData = async (req, res) => {
 
     const xml = response.data;
     console.log('Raw XML Response:', xml);
-    
+
     // Parse the XML response
     xml2js.parseString(xml, { explicitArray: false }, (err, result) => {
       if (err) {
@@ -47,18 +47,48 @@ exports.getInquiryData = async (req, res) => {
       }
 
       try {
-        const items = result['soap-env:Envelope']
-          ['soap-env:Body']
-          ['n0:ZIN_CUST_AKG_FMResponse']
-          ['ET_INQUIRY_LIST']
-          ['item'];
+        const envelope = result['soap-env:Envelope'] || result['SOAP-ENV:Envelope'] || result.Envelope;
+        const body = envelope['soap-env:Body'] || envelope['SOAP-ENV:Body'] || envelope.Body;
+        const responseNode = body['n0:ZIN_CUST_AKG_FMResponse'] || body.ZIN_CUST_AKG_FMResponse;
 
+        const items = responseNode?.ET_INQUIRY_LIST?.item;
+
+        if (!items) {
+          return res.json({
+            status: 'S',
+            data: []
+          });
+        }
+
+        // Ensure it's always an array
         const itemList = Array.isArray(items) ? items : [items];
+
+        // Map each item to a clean JSON object
+        const documentDataList = itemList.map(item => ({
+          "Document Number": item.DOCUMENT_NO || '',
+          "Document Type": item.DOCUMENT_TYPE || '',
+          "Customer ID": item.CUSTOMER_ID || '',
+          "Created On": item.CREATED_ON || '',
+          "Created By": item.CREATED_BY || '',
+          "Sales Document Currency": item.SD_DOCUMENT_CURRENCY || '',
+          "Document Created Date": item.DOCUMENT_CREATED || '',
+          "Sales Organization": item.SALES_ORG || '',
+          "Document Currency": item.DOCUMENT_CURRENCY || '',
+          "Purchase Order Number": item.PO_NUMBER || '',
+          "Item Number": item.ITEM_NO || '',
+          "Material Number": item.MAT_NR || '',
+          "Item Description": item.ITEM_DES || '',
+          "Cumulative Order Quantity (Sales)": item.CUM_OR_QUAN_SALES || '',
+          "Requested Quantity": item.CUM_REQ_DEL_QUAN || '',
+          "Sales Unit": item.SALES_UNIT || ''
+        }));
+
 
         res.json({
           status: 'S',
-          data: itemList
+          data: documentDataList
         });
+
       } catch (parseError) {
         console.error('❌ Data Extract Error:', parseError);
         res.status(500).json({

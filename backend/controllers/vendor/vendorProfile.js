@@ -38,15 +38,15 @@ exports.getVendorProfile = async (req, res) => {
       }
 
       const cleanData = {
-        vendorId: vendorData['d:VendorId'],
-        vendorName: vendorData['d:VendorName'],
-        vendorCity: vendorData['d:VendoeCity'],
-        postalCode: vendorData['d:PostalCode'],
-        street: vendorData['d:Street'],
-        emailId: vendorData['d:EmailId'],
-        paymentTerm: vendorData['d:PaymentTerm'],
-        phoneNumber: vendorData['d:PhoneNumber'],
-        country: vendorData['d:Country']
+        "Vendor Id": vendorData['d:VendorId'],
+        "Vendor Name": vendorData['d:VendorName'],
+        "Vendor City": vendorData['d:VendoeCity'],
+        "Postal Code": vendorData['d:PostalCode'],
+        "Street": vendorData['d:Street'],
+        "Email Id": vendorData['d:EmailId'],
+        "Payment Term": vendorData['d:PaymentTerm'],
+        "Phone Number": vendorData['d:PhoneNumber'],
+        "Country": vendorData['d:Country']
       };
 
       res.json({ status: 'SUCCESS', data: cleanData });

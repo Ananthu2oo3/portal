@@ -4,7 +4,10 @@ exports.getPaymentAging = async (req, res) => {
   const vendor = req.body.username;
 
   if (!vendor) {
-    return res.status(400).json({ status: 'ERROR', message: 'Username (vendor) is required in request body' });
+    return res.status(400).json({
+      status: 'ERROR',
+      message: 'Username (vendor) is required in request body'
+    });
   }
 
   const vendorNo = vendor.padStart(10, '0');
@@ -26,30 +29,43 @@ exports.getPaymentAging = async (req, res) => {
 
     console.log('🟢 [2] Data retrieved');
 
-    const quotationRequest = response.data?.d?.results || [];
+    const paymentAgingData = response.data?.d?.results || [];
 
-    // 🧹 Clean the data by removing __metadata and formatting dates
-    const cleanedData = quotationRequest.map(entry => {
-      const { __metadata, ...rest } = entry;
+    // Helper: Format SAP date
+    const formatSAPDate = (sapDate) => {
+      const timestamp = parseInt(sapDate?.match(/\d+/)?.[0] || '0');
+      return timestamp ? new Date(timestamp).toISOString().split('T')[0] : null;
+    };
 
-      const formatSAPDate = (sapDate) => {
-        const timestamp = parseInt(sapDate?.match(/\d+/)?.[0] || '0');
-        return timestamp ? new Date(timestamp).toISOString().split('T')[0] : null;
-      };
+    // 🧹 Map to user-friendly keys
+    const mappedData = paymentAgingData.map(entry => ({
+      "Vendor Number": entry.VendorNo || '',
+      "Vendor Name": entry.VendorName || '',
+      "Company Code": entry.CompanyCode || '',
+      "Document Number": entry.DocNo || '',
+      "Fiscal Year": entry.FiscalYear || '',
+      "Posting Key": entry.PostingKey || '',
+      "Debit/Credit Indicator": entry.DebitCreditIndicator || '',
+      "Amount (Local Currency)": entry.AmntLocCurrency || '',
+      "Amount (Document Currency)": entry.AmntDocCurrency || '',
+      "Assignment Number": entry.AssignNo || '',
+      "Document Date": formatSAPDate(entry.DocDate),
+      "Posting Date": formatSAPDate(entry.PostingDate),
+      "Transaction Code": entry.TCode || '',
+      "Currency": entry.CurrencyKey || '',
+      "Baseline Date": formatSAPDate(entry.BaselineDate),
+      "Due Date": formatSAPDate(entry.DueDate),
+      "Aging": entry.Aging || '',
+      "Aging Bucket": entry.AgingBucket || ''
+    }));
 
-      return {
-        ...rest,
-        DocDate: formatSAPDate(rest.DocDate),        
-        BaselineDate: formatSAPDate(rest.BaselineDate),
-        PostingDate: formatSAPDate(rest.PostingDate),
-        DueDate: formatSAPDate(rest.DueDate)
-      };
-    });
-
-    res.json({ status: 'SUCCESS', data: cleanedData });
+    res.json({ status: 'SUCCESS', data: mappedData });
 
   } catch (error) {
     console.error('🔴 [3] Error retrieving data:', error.response?.data || error.message);
-    res.status(500).json({ status: 'ERROR', message: 'Failed to retrieve data' });
+    res.status(500).json({
+      status: 'ERROR',
+      message: 'Failed to retrieve data'
+    });
   }
 };

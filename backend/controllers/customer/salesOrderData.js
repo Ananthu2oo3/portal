@@ -59,21 +59,6 @@ exports.getSalesOrderData = async (req, res) => {
         const items = responseData.ET_SALESORD_LIST?.item;
         const itemList = Array.isArray(items) ? items : items ? [items] : [];
 
-
-        // ✅ Filter only required fields
-        // const filteredItemList = itemList.map(item => ({
-        //   SALES_DOC_NUMBER: item.SALES_DOC_NUMBER,
-        //   ORG: item.ORG,
-        //   SALES_REQ_DEL_DATE: item.SALES_REQ_DEL_DATE,
-        //   SOLD_TO_PARTY: item.SOLD_TO_PARTY,
-        //   MATERIAL_AVAILABLE_DATE: item.MATERIAL_AVAILABLE_DATE,
-        //   MATERIAL_DESCRIP: item.MATERIAL_DESCRIP,
-        //   CUSTOMER_NAME: item.CUSTOMER_NAME,
-        //   ORDER_QUANTITY: item.ORDER_QUANTITY,
-        //   CREDIT_DEBIT: item.CREDIT_DEBIT,
-        //   BKPF: item.BKPF
-        // }));
-
         const filteredItemList = itemList.map(item => ({
 
           "Sales Doc Number": item.SALES_DOC_NUMBER,
@@ -89,13 +74,6 @@ exports.getSalesOrderData = async (req, res) => {
           status: 'S',
           data: filteredItemList
         });
-
-
-        // return res.json({
-        //   status: 'S',
-        //   data: itemList
-        // });
-
 
       } catch (parseError) {
         console.error('❌ Data Extract Error:', parseError);

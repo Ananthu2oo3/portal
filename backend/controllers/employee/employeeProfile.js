@@ -50,23 +50,24 @@ exports.getEmployeeProfile = async (req, res) => {
     }
 
     const employeeData = {
-      employee_id: employeeItem.EMPLOYEE_ID,
-      first_name: employeeItem.FIRST_NAME,
-      last_name: employeeItem.LAST_NAME,
-      dob: employeeItem.DOB,
-      nationality: employeeItem.NATIONALITY,
-      city: employeeItem.CITY,
-      country: employeeItem.COUNTRY,
-      email: employeeItem.EMAIL_ID,
-      employee_job: employeeItem.EMPLOYEE_JOB,
-      employee_role: employeeItem.EMPLOYEE_ROLE,
-      employee_position: employeeItem.EMPLOYEE_POSITION,
-      employee_group: employeeItem.EMPLOYEE_GROUP,
-      personnel_sub_area: employeeItem.PERSONNEL_SUB_AREA,
-      company_code: employeeItem.COMPANY_CODE,
-      organization_unit: employeeItem.ORGANIZATION_UNIT,
-      payroll_area: employeeItem.PAYROLL_AREA
+      "Employee ID": employeeItem.EMPLOYEE_ID || '',
+      "First Name": employeeItem.FIRST_NAME || '',
+      "Last Name": employeeItem.LAST_NAME || '',
+      "Date of Birth": employeeItem.DOB || '',
+      "Nationality": employeeItem.NATIONALITY || '',
+      "City": employeeItem.CITY || '',
+      "Country": employeeItem.COUNTRY || '',
+      "Email ID": employeeItem.EMAIL_ID || '',
+      "Job ID": employeeItem.EMPLOYEE_JOB || '',
+      "Employee Role": employeeItem.EMPLOYEE_ROLE || '',
+      "Position ID": employeeItem.EMPLOYEE_POSITION || '',
+      "Employee Group": employeeItem.EMPLOYEE_GROUP || '',
+      "Personnel Sub Area": employeeItem.PERSONNEL_SUB_AREA || '',
+      "Company Code": employeeItem.COMPANY_CODE || '',
+      "Organizational Unit": employeeItem.ORGANIZATION_UNIT || '',
+      "Payroll Area": employeeItem.PAYROLL_AREA || ''
     };
+
 
     res.json({ status: 'S', data: employeeData });
 

@@ -42,23 +42,23 @@ exports.getCustomerProfile = async (req, res) => {
     };
 
     const customerData = {
-      customer_id: getValue('CUSTOMER_ID'),
-      customer_name: getValue('CUSTOMER_NAME'),
-      country: getValue('COUNTRY'),
-      city: getValue('CITY'),
-      postal_code: getValue('POSTAL_CODE'),
-      address: getValue('ADDRESS'),
-      street: getValue('STREET'),
-      bank_created_on: getValue('BANK_CREATED_ON'),
-      bank_created_by: getValue('BANK_CREATED_BY'),
-      acct_grp: getValue('ACCT_GRP'),
-      bank_name: getValue('BANNK_NAME'),
-      bank_no: getValue('BANK_NO')
+      "Customer ID": getValue('CUSTOMER_ID'),
+      "Customer Name": getValue('CUSTOMER_NAME'),
+      "Country": getValue('COUNTRY'),
+      "City": getValue('CITY'),
+      "Postal Code": getValue('POSTAL_CODE'),
+      "Address": getValue('ADDRESS'),
+      "Street": getValue('STREET'),
+      "Account Created On": getValue('BANK_CREATED_ON'),
+      "Account Created By": getValue('BANK_CREATED_BY'),
+      "Account Group": getValue('ACCT_GRP'),
+      "Bank Name": getValue('BANNK_NAME'),
+      "Bank No": getValue('BANK_NO')
     };
 
     res.json({
       status: 'S',
-      data: res
+      data: customerData
     });
 
   } catch (error) {

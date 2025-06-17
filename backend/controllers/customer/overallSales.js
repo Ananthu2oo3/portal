@@ -2,7 +2,7 @@ const axios = require('axios');
 const xml2js = require('xml2js');
 
 exports.getOverallSalesData = async (req, res) => {
-  const customer_id = req.body.username?.trim();
+  let customer_id = req.body.username?.trim();
 
   if (!customer_id) {
     return res.status(400).json({
@@ -34,7 +34,7 @@ exports.getOverallSalesData = async (req, res) => {
     });
 
     const xml = response.data;
-    console.log('Raw XML Response:', xml);
+    // console.log('📄 Raw XML Response:\n', xml);
 
     xml2js.parseString(xml, {
       explicitArray: false,
@@ -55,47 +55,34 @@ exports.getOverallSalesData = async (req, res) => {
         const responseKey = Object.keys(body)[0];
         const responseData = body[responseKey];
 
-        // ✅ Use the correct tag from your XML
         const items = responseData.ET_SALESORD_LIST?.item;
         const itemList = Array.isArray(items) ? items : items ? [items] : [];
 
-
-        // ✅ Filter only required fields
-        // const filteredItemList = itemList.map(item => ({
-        //   SALES_DOC_NUMBER: item.SALES_DOC_NUMBER,
-        //   ORG: item.ORG,
-        //   SALES_REQ_DEL_DATE: item.SALES_REQ_DEL_DATE,
-        //   SOLD_TO_PARTY: item.SOLD_TO_PARTY,
-        //   MATERIAL_AVAILABLE_DATE: item.MATERIAL_AVAILABLE_DATE,
-        //   MATERIAL_DESCRIP: item.MATERIAL_DESCRIP,
-        //   CUSTOMER_NAME: item.CUSTOMER_NAME,
-        //   ORDER_QUANTITY: item.ORDER_QUANTITY,
-        //   CREDIT_DEBIT: item.CREDIT_DEBIT,
-        //   BKPF: item.BKPF
-        // }));
-
-        // const filteredItemList = itemList.map(item => ({
-
-        //   "Sales Doc Number": item.SALES_DOC_NUMBER,
-        //   "Material Available Date": item.MATERIAL_AVAILABLE_DATE,
-        //   "Order Quantity": item.ORDER_QUANTITY,
-        //   "Sales Org": item.SALES_ORG,
-        //   "Required Delivery Date": item.REQ_DEL_DATE,
-        //   "Material Description": item.MATERIAL_DECRIPTION,
-        //   "Sales Unit": item.SALES_UNIT  
-        // }));
-
-        // return res.json({
-        //   status: 'S',
-        //   data: filteredItemList
-        // });
-
+        // ✅ Map each item to selected, user-friendly keys
+        const mappedList = itemList.map(item => ({
+          "Sales Document Number": item.SALES_DOC_NUMBER || '',
+          "Document Category": item.DOC_CATEGORY || '',
+          "Sales Organization": item.SALES_ORG || '',
+          "Distribution Channel": item.DIST_CHANNEL || '',
+          "Division": item.SD_DIVISION || '',
+          "Required Delivery Date": item.REQ_DEL_DATE || '',
+          "Sales Probability": item.SALES_PROB || '',
+          "Sold To Party": item.SOLD_TO_PARTY || '',
+          "Company Code To Be Billed": item.COMPANY_CODE_TO_BE_BILLED || '',
+          "Material Available Date": item.MATERIAL_AVAILABLE_DATE || '',
+          "Item Number": item.ITEM_NUMBER || '',
+          "Material Number": item.MATERIAL_NUMBER || '',
+          "Customer Name": item.CUSTOMER_NAME || '',
+          "Material Description": item.MATERIAL_DECRIPTION || '',
+          "Order Quantity": item.ORDER_QUANTITY || '',
+          "Payment Terms": item.PAYMENT_TERMS || '',
+          "Sales Unit": item.SALES_UNIT || ''
+        }));
 
         return res.json({
           status: 'S',
-          data: itemList
+          data: mappedList
         });
-
 
       } catch (parseError) {
         console.error('❌ Data Extract Error:', parseError);

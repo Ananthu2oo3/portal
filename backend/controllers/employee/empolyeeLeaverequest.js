@@ -14,15 +14,14 @@ exports.getEmployeeLeaveRequest = async (req, res) => {
   console.log('📥 Received employee ID:', username);
 
   const soapEnvelope = `
-   <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sap="urn:sap-com:document:sap:rfc:functions">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <sap:ZELR_AKG_FM>
-         <IV_EMPLOYEE_ID>${username}</IV_EMPLOYEE_ID>
-      </sap:ZELR_AKG_FM>
-   </soapenv:Body>  
-</soapenv:Envelope>`;
-
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sap="urn:sap-com:document:sap:rfc:functions">
+      <soapenv:Header/>
+      <soapenv:Body>
+        <sap:ZELR_AKG_FM>
+          <IV_EMPLOYEE_ID>${username}</IV_EMPLOYEE_ID>
+        </sap:ZELR_AKG_FM>
+      </soapenv:Body>
+    </soapenv:Envelope>`;
 
   try {
     const response = await axios.post(process.env.LEAVE_REQUEST_URL, soapEnvelope, {
@@ -35,48 +34,53 @@ exports.getEmployeeLeaveRequest = async (req, res) => {
     });
 
     const xml = response.data;
-    // console.log('📤 SOAP Response:', xml);
 
     const parser = new xml2js.Parser({
       explicitArray: false,
-      tagNameProcessors: [xml2js.processors.stripPrefix], 
+      tagNameProcessors: [xml2js.processors.stripPrefix],
     });
 
     const parsed = await parser.parseStringPromise(xml);
 
-    const employeeItem = parsed.Envelope?.Body?.ZELR_AKG_FMResponse?.ET_EMPLOYEE_PROFILE?.item;
-    // console.log('📄 Parsed Employee Item:', employeeItem);
+    let employeeItems = parsed.Envelope?.Body?.ZELR_AKG_FMResponse?.ET_EMPLOYEE_PROFILE?.item;
 
-    if (!employeeItem) {
-      return res.status(404).json({ status: 'E', message: 'Employee not found' });
+    // 🔑 Normalize to array
+    if (!employeeItems) {
+      return res.status(404).json({ status: 'E', message: 'Employee leave requests not found' });
+    }
+    if (!Array.isArray(employeeItems)) {
+      employeeItems = [employeeItems]; // if only 1 item, wrap in array
     }
 
-    // const employeeData = {
-    //   employee_id: employeeItem.EMPLOYEE_ID,
-    //   first_name: employeeItem.FIRST_NAME,
-    //   last_name: employeeItem.LAST_NAME,
-    //   dob: employeeItem.DOB,
-    //   nationality: employeeItem.NATIONALITY,
-    //   city: employeeItem.CITY,
-    //   country: employeeItem.COUNTRY,
-    //   email: employeeItem.EMAIL_ID,
-    //   employee_job: employeeItem.EMPLOYEE_JOB,
-    //   employee_role: employeeItem.EMPLOYEE_ROLE,
-    //   employee_position: employeeItem.EMPLOYEE_POSITION,
-    //   employee_group: employeeItem.EMPLOYEE_GROUP,
-    //   personnel_sub_area: employeeItem.PERSONNEL_SUB_AREA,
-    //   company_code: employeeItem.COMPANY_CODE,
-    //   organization_unit: employeeItem.ORGANIZATION_UNIT,
-    //   payroll_area: employeeItem.PAYROLL_AREA
-    // };
+    console.log('📄 Parsed Employee Items:', employeeItems);
 
-    res.json({ status: 'S', data: employeeItem });
+    // 🔑 Map each leave record to your desired format
+    const leaveRequestData = employeeItems.map(item => ({
+      "Employee ID": item.EMPLOYEE_ID || '',
+      "Leave Start Date": item.START_DATE || '',
+      "Leave End Date": item.END_DATE || '',
+      "Start Time": item.START_TIME || '',
+      "End Time": item.END_TIME || '',
+      "Absence Type Code": item.ABSENT_TYPE || '',
+      "Days on Leave": item.DAYS_ON_LEAVE || '',
+      "Absence Hours": item.ABSENSE_HOUR || '',
+      "Payroll Days": item.PAYROLL_DAYS || '',
+      "Payroll Hours": item.PAYROLL_HOUR || '',
+      "Calendar Days": item.CALENDER_DAYS || '',
+      "Document Number": item.DOC_NO || '',
+      "Absence Quota Type": item.ABSENT_QUOTA_TYPE || '',
+      "Counter for Time": item.COUNTER_FOR_TIME || '',
+      "Start Date for Quota": item.START_DATE_FOR_QUOTA || '',
+      "Quota Deduction Date": item.QUOTA_DEDUCTION || ''
+    }));
+
+    res.json({ status: 'S', data: leaveRequestData });
 
   } catch (error) {
     console.error('❌ SOAP Error:', error.response?.data || error.message);
     res.status(500).json({
       status: 'E',
-      message: 'Failed to retrieve employee profile'
+      message: 'Failed to retrieve employee leave requests'
     });
   }
 };

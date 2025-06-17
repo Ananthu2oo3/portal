@@ -11,7 +11,7 @@ exports.getCreditDebitData = async (req, res) => {
     });
   }
 
-
+  // Format customer_id as 10 digits
   customer_id = customer_id.padStart(10, '0');
   console.log('📥 Formatted customer_id:', customer_id);
 
@@ -36,7 +36,7 @@ exports.getCreditDebitData = async (req, res) => {
     });
 
     const xml = response.data;
-    console.log('Raw XML Response:', xml);
+    // console.log('📄 Raw XML Response:\n', xml);
 
     xml2js.parseString(xml, {
       explicitArray: false,
@@ -60,9 +60,30 @@ exports.getCreditDebitData = async (req, res) => {
         const items = responseData.ET_CREDIT_MEMO?.item;
         const itemList = Array.isArray(items) ? items : items ? [items] : [];
 
+        // ✅ Map fields to user-friendly keys
+        const mappedList = itemList.map(item => ({
+          "Billing Document Number": item.BILLING_DOC_NO || '',
+          "Billing Type": item.BILLING_TYPE || '',
+          "Billing Date": item.BILLING_DATE || '',
+          "Sold To Customer": item.SOLD_TO_CUSTOMER || '',
+          "Currency": item.CURRENCY || '',
+          "Net Value Credit Memo": item.NET_VALUE_CREDIT_MEMO || '',
+          "Item Number": item.ITEM_NUMBER || '',
+          "Material Number": item.MATERIAL_NUMBER || '',
+          "Billing Quantity": item.BILLING_QUANTITY || '',
+          "FI Document Type": item.FI_DOC_TYPE || '',
+          "Company Code": item.COMPANY_CODE || '',
+          "Credit/Debit Nature": item.CREDIT_DEBIT_NATURE || '',
+          "Amount Doc Currency": item.AMT_DOC_CURR || '',
+          "Debit/Credit Indicator": item.DEBIT_CREDIT_INDICATOR || '',
+          "Customer Number": item.CUSTOMER_NUMBER || '',
+          "Sales Unit": item.SALES_UNIT || '',
+          "Currency Key": item.CURRENCY_KEY || ''
+        }));
+
         return res.json({
           status: 'S',
-          data: itemList
+          data: mappedList
         });
 
       } catch (parseError) {

@@ -1,17 +1,20 @@
 const axios = require('axios');
 
 exports.getGoodsReceipt = async (req, res) => {
-  const vendorNo = req.body.username;
-  
+  const vendor = req.body.username;
 
-  if (!vendorNo) {
-    return res.status(400).json({ status: 'ERROR', message: 'VendorNo is required as a query parameter' });
+  if (!vendor) {
+    return res.status(400).json({
+      status: 'ERROR',
+      message: 'VendorNo is required in request body'
+    });
   }
 
-  console.log('🔵 [1] Fetching goods request for VendorNo:', vendorNo);
+  const vendorNo = vendor.padStart(10, '0');
+  console.log('🔵 [1] Fetching goods receipt for VendorNo:', vendorNo);
 
-  const url = `${process.env.GOODS_RECEIPT_URL}?$filter=VendorNo eq'${vendorNo}'`;
-
+  // ✅ Fixed filter syntax: eq 'value'
+  const url = `${process.env.GOODS_RECEIPT_URL}?$filter=VendorNo eq '${vendorNo}'`;
 
   const headers = {
     'Accept': 'application/json',
@@ -25,31 +28,42 @@ exports.getGoodsReceipt = async (req, res) => {
       maxBodyLength: Infinity
     });
 
-    console.log('🟢 [2] Goods request data retrieved');
+    console.log('🟢 [2] Goods receipt data retrieved');
 
     const goodsData = response.data?.d?.results || [];
 
-    // 🧹 Clean the data by removing __metadata and formatting dates
-    const cleanedData = goodsData.map(entry => {
-      const { __metadata, ...rest } = entry;
+    const formatSAPDate = (sapDate) => {
+      const timestamp = parseInt(sapDate?.match(/\d+/)?.[0] || '0');
+      return timestamp ? new Date(timestamp).toISOString().split('T')[0] : '';
+    };
 
-      // Optional: Convert SAP date string to readable format
-      const formatSAPDate = (sapDate) => {
-        const timestamp = parseInt(sapDate?.match(/\d+/)?.[0] || '0');
-        return new Date(timestamp).toISOString().split('T')[0]; 
-      };
+    // 🗂️ Map to detailed readable keys
+    const mappedData = goodsData.map(entry => ({
+      "Material Document Number": entry.MatDocNo || '',
+      "Document Year": entry.DocYear || '',
+      "Posting Date": formatSAPDate(entry.PostDate),
+      "Document Date": formatSAPDate(entry.DocDate),
+      "Document Type": entry.DocType || '',
+      "Created By": entry.CreatedBy || '',
+      "Item Number": entry.ItemNo || '',
+      "PO Number": entry.PoNumber || '',
+      "PO Item": entry.PoItem || '',
+      "Movement Type": entry.MoveType || '',
+      "Quantity": entry.Quantity || '',
+      "Unit of Measure": entry.UnitMeasure || '',
+      "Plant": entry.Plant || '',
+      "Storage Location": entry.StorageLoc || '',
+      "Material Number": entry.MatNo || '',
+      "Vendor Number": entry.VendorNo || ''
+    }));
 
-      return {
-        ...rest,
-        PostDate: formatSAPDate(rest.PostDate),
-        DocDate: formatSAPDate(rest.DocDate)
-      };
-    });
-
-    res.json({ status: 'SUCCESS', data: cleanedData });
+    res.json({ status: 'SUCCESS', data: mappedData });
 
   } catch (error) {
-    console.error('🔴 [3] Error retrieving goods request:', error.response ? error.response.data : error.message);
-    res.status(500).json({ status: 'ERROR', message: 'Failed to retrieve goods request data' });
+    console.error('🔴 [3] Error retrieving goods receipt:', error.response?.data || error.message);
+    res.status(500).json({
+      status: 'ERROR',
+      message: 'Failed to retrieve goods receipt data'
+    });
   }
 };

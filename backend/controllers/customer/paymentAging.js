@@ -36,7 +36,7 @@ exports.getPaymentAgingData = async (req, res) => {
     });
 
     const xml = response.data;
-    console.log('Raw XML Response:', xml);
+    // console.log('Raw XML Response:', xml);
 
     xml2js.parseString(xml, {
       explicitArray: false,
@@ -60,9 +60,27 @@ exports.getPaymentAgingData = async (req, res) => {
         const items = responseData.ET_AGING?.item;
         const itemList = Array.isArray(items) ? items : items ? [items] : [];
 
+        const mappedList = itemList.map(item => ({
+          "Document Number": item.DOC_NUMBER || '',
+          "Billing Date": item.BILLING_DATE || '',
+          "Payment Terms": item.PAYMENT_TERMS || '',
+          "Sold To Party": item.SOLD_TO_PARTY || '',
+          "Net Value": item.NET_VALUE || '',
+          "Currency": item.CURRENCY || '',
+          "Sales Organisation": item.SALES_ORGANISATION || '',
+          "Distribution Channel": item.DIST_CHANNEL || '',
+          "Due Date": item.DUE_DATE || '',
+          "Aging": item.AGING || '',
+          "Customer Name": item.CUSTOMER_NAME || '',
+          "Customer City": item.CUSTOMER_CITY || '',
+          "Customer Country": item.CUSTOMER_COUNTRY || '',
+          "Division": item.DIVISION || '',
+          "Item Number": item.ITEM_NUMBER || ''
+        }));
+
         return res.json({
           status: 'S',
-          data: itemList
+          data: mappedList
         });
 
       } catch (parseError) {

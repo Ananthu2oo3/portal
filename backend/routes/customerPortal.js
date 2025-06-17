@@ -47,6 +47,9 @@ router.post("/vendor-invoice", getVendorInvoice);
 router.post("/download-vendor-invoice", downloadVendorInvoice);
 
 
+// Employee Portal Routes
+
+
 const { employeeLogin } = require('../controllers/employee/employee_login.js');
 const { getEmployeeProfile } = require('../controllers/employee/employeeProfile.js');
 const { getEmployeeLeaveRequest } = require('../controllers/employee/empolyeeLeaverequest.js');

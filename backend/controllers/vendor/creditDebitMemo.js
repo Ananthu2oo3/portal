@@ -2,16 +2,17 @@ const axios = require('axios');
 
 exports.getCreditDebitMemo = async (req, res) => {
   const vendorNo = req.body.username;
-  
 
   if (!vendorNo) {
-    return res.status(400).json({ status: 'ERROR', message: 'VendorNo is required as a query parameter' });
+    return res.status(400).json({
+      status: 'ERROR',
+      message: 'VendorNo is required in request body'
+    });
   }
 
   console.log('🔵 [1] Fetching data for VendorNo:', vendorNo);
 
-  const url = `${process.env.CREDIT_DEBIT_MEMO}?$filter=VendorNo eq'${vendorNo}'`;
-
+  const url = `${process.env.CREDIT_DEBIT_MEMO}?$filter=VendorNo eq '${vendorNo}'`;
 
   const headers = {
     'Accept': 'application/json',
@@ -25,32 +26,43 @@ exports.getCreditDebitMemo = async (req, res) => {
       maxBodyLength: Infinity
     });
 
-    console.log('🟢 [2] data retrieved');
+    console.log('🟢 [2] Data retrieved');
 
-    const goodsData = response.data?.d?.results || [];
+    const creditDebitData = response.data?.d?.results || [];
 
-    // 🧹 Clean the data by removing __metadata and formatting dates
-    const cleanedData = goodsData.map(entry => {
-      const { __metadata, ...rest } = entry;
+    // Helper: Format SAP date string to YYYY-MM-DD
+    const formatSAPDate = (sapDate) => {
+      const timestamp = parseInt(sapDate?.match(/\d+/)?.[0] || '0');
+      return timestamp ? new Date(timestamp).toISOString().split('T')[0] : null;
+    };
 
-      // Optional: Convert SAP date string to readable format
-      const formatSAPDate = (sapDate) => {
-        const timestamp = parseInt(sapDate?.match(/\d+/)?.[0] || '0');
-        return new Date(timestamp).toISOString().split('T')[0]; 
-      };
+    // ✅ Map to user-friendly keys
+    const mappedData = creditDebitData.map(entry => ({
+      "Vendor Number": entry.VendorNo || '',
+      "Vendor Name": entry.VendorName || '',
+      "Company Code": entry.CompanyCode || '',
+      "Document Number": entry.DocNo || '',
+      "Fiscal Year": entry.FiscalYear || '',
+      "Line Item Number": entry.NoLineItem || '',
+      "Posting Key": entry.PostingKey || '',
+      "Debit/Credit Indicator": entry.DebitCreditIndicator || '',
+      "Amount (Local Currency)": entry.AmntLocalCurrency || '',
+      "Amount (Document Currency)": entry.AmntDocCurrency || '',
+      "Assignment Number": entry.AssignNo || '',
+      "Document Type": entry.DocType || '',
+      "Document Date": formatSAPDate(entry.DocDate),
+      "Posting Date": formatSAPDate(entry.PostingDate),
+      "Transaction Code": entry.Tcode || '',
+      "Currency": entry.CurrencyKey || ''
+    }));
 
-      return {
-        ...rest,
-        PostDate: formatSAPDate(rest.PostDate),
-        PostingDate: formatSAPDate(rest.PostingDate),
-        DocDate: formatSAPDate(rest.DocDate)
-      };
-    });
-
-    res.json({ status: 'SUCCESS', data: cleanedData });
+    res.json({ status: 'SUCCESS', data: mappedData });
 
   } catch (error) {
     console.error('🔴 [3] Error retrieving data:', error.response ? error.response.data : error.message);
-    res.status(500).json({ status: 'ERROR', message: 'Failed to retrieve data' });
+    res.status(500).json({
+      status: 'ERROR',
+      message: 'Failed to retrieve data'
+    });
   }
 };
