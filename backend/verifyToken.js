@@ -1,16 +1,13 @@
-// verifyToken.js
 const jwt = require('jsonwebtoken');
 
 const secretKey = process.env.JWT_SECRET;
 
-// Utility to create a token (can use in your login controller)
 exports.generateToken = (payload) => {
   return jwt.sign(payload, secretKey, { expiresIn: '1h' });
 };
 
-// Middleware to verify the token on protected routes
 exports.verifyToken = (req, res, next) => {
-  // Define routes that do NOT require auth
+
   const openPaths = [
     '/api/customer-login',
     '/api/vendor-login',
@@ -18,10 +15,9 @@ exports.verifyToken = (req, res, next) => {
   ];
 
   if (openPaths.includes(req.originalUrl)) {
-    return next(); // skip auth check
+    return next(); 
   }
 
-  // Check Authorization header
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ status: 'E', message: 'No token provided' });

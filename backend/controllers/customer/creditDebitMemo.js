@@ -36,7 +36,7 @@ exports.getCreditDebitData = async (req, res) => {
     });
 
     const xml = response.data;
-    // console.log('📄 Raw XML Response:\n', xml);
+    console.log('📄 Raw XML Response:\n', xml);
 
     xml2js.parseString(xml, {
       explicitArray: false,
@@ -71,11 +71,11 @@ exports.getCreditDebitData = async (req, res) => {
           "Item Number": item.ITEM_NUMBER || '',
           "Material Number": item.MATERIAL_NUMBER || '',
           "Billing Quantity": item.BILLING_QUANTITY || '',
-          "FI Document Type": item.FI_DOC_TYPE || '',
-          "Company Code": item.COMPANY_CODE || '',
-          "Credit/Debit Nature": item.CREDIT_DEBIT_NATURE || '',
+          // "FI Document Type": item.FI_DOC_TYPE || '',
+          // "Company Code": item.COMPANY_CODE || '',
+          // "Credit/Debit Nature": item.CREDIT_DEBIT_NATURE || '',
           "Amount Doc Currency": item.AMT_DOC_CURR || '',
-          "Debit/Credit Indicator": item.DEBIT_CREDIT_INDICATOR || '',
+          // "Debit/Credit Indicator": item.DEBIT_CREDIT_INDICATOR || '',
           "Customer Number": item.CUSTOMER_NUMBER || '',
           "Sales Unit": item.SALES_UNIT || '',
           "Currency Key": item.CURRENCY_KEY || ''

@@ -3,8 +3,7 @@ const axios = require('axios');
 exports.downloadVendorInvoice = async (req, res) => {
   const vendor = req.body.username;
   const doc_no = req.body.doc_no;
-  // const vendor = req.body["Vendor Number"]
-  // const doc_no = req.body["Document Number"]
+
 
   if (!vendor) {
     return res.status(400).json({ status: 'ERROR', message: 'Username (vendor) is required in request body' });
@@ -47,3 +46,5 @@ exports.downloadVendorInvoice = async (req, res) => {
     res.status(500).json({ status: 'ERROR', message: 'Failed to retrieve PDF invoice' });
   }
 };
+
+

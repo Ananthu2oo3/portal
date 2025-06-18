@@ -11,7 +11,8 @@ const { getSalesOrderData }     = require('../controllers/customer/salesOrderDat
 const { getOverallSalesData }   = require('../controllers/customer/overallSales.js');
 const { getCreditDebitData }    = require('../controllers/customer/creditDebitMemo.js');
 const { getPaymentAgingData }   = require('../controllers/customer/paymentAging.js')
-const { getInvoiceData }        = require('../controllers/customer/invoice.js');
+const { getInvoiceData }        = require('../controllers/customer/invoiceData.js');
+const { downloadCustomerInvoice } = require('../controllers/customer/invoiceDownload.js');
 
 router.post('/customer-login', handleLogin);
 router.post('/customer-profile', getCustomerProfile);
@@ -22,6 +23,7 @@ router.post("/overall-sales", getOverallSalesData);
 router.post("/credit-debit-memo", getCreditDebitData);
 router.post("/payment-aging", getPaymentAgingData)
 router.post("/invoice-data", getInvoiceData);
+router.post("/download-customer-invoice", downloadCustomerInvoice);
 
 
 // Vendor Portal Routes

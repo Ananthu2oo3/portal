@@ -12,15 +12,16 @@ exports.getInvoiceData = async (req, res) => {
   }
 
   customer_id = customer_id.padStart(10, '0');
+  console.log('🔵 [1] Fetching invoice data for customer:', customer_id);
 
   const soapEnvelope = `
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
                       xmlns:urn="urn:sap-com:document:sap:rfc:functions">
       <soapenv:Header/>
       <soapenv:Body>
-        <urn:ZINV_AKG_FM>
+        <urn:ZINVD_AKG_FM>
           <CUSTOMER>${customer_id}</CUSTOMER>
-        </urn:ZINV_AKG_FM>
+        </urn:ZINVD_AKG_FM>
       </soapenv:Body>
     </soapenv:Envelope>`;
 
@@ -43,15 +44,15 @@ exports.getInvoiceData = async (req, res) => {
 
       try {
         const body = result.Envelope.Body;
+
+        // The new response structure: ZINVD_AKG_FMResponse -> ET_INVOICE_LIST -> item[]
         const responseKey = Object.keys(body)[0];
         const data = body[responseKey];
-        const base64PDF = data.EV_PDF_BASE64 || '';
 
         const rawItems = Array.isArray(data.ET_INVOICE_LIST?.item)
           ? data.ET_INVOICE_LIST.item
           : data.ET_INVOICE_LIST?.item ? [data.ET_INVOICE_LIST.item] : [];
 
-        // ✅ Map each raw item to descriptive keys
         const invoiceItems = rawItems.map(item => ({
           "Billed Document": item.BILLED_DOCUMENT || '',
           "Billing Type": item.BILLING_TYPE || '',
@@ -75,26 +76,12 @@ exports.getInvoiceData = async (req, res) => {
           "Plant": item.PLANT || '',
           "Storage Location": item.STORAGE_LOC || '',
           "Posting Date": item.POSTING_DATE || '',
-          "Stock Transfer": item.STOCK_TRANSFER || '',
-          "Goods Recipient": item.GOODS_RECIPT || '',
-          "Currency Key": item.CURRENCY_KEY || '',
-          "Customer Address": item.CUSTOMER_ADDRESS || ''
+          "Stock Transfer": item.STOCK_TRANSFER || ''
         }));
 
-        // ✅ If download=true, stream PDF
-        if (req.query.download === 'true') {
-          if (!base64PDF) return res.status(404).send('PDF not available');
-          const buffer = Buffer.from(base64PDF, 'base64');
-          res.setHeader('Content-Type', 'application/pdf');
-          res.setHeader('Content-Disposition', 'attachment; filename=invoice.pdf');
-          return res.send(buffer);
-        }
-
-        // ✅ Else, send JSON with detailed items and PDF base64
         return res.json({
           status: 'S',
-          data: invoiceItems,
-          pdfBase64: base64PDF
+          data: invoiceItems
         });
 
       } catch (parseErr) {

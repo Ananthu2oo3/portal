@@ -8,6 +8,7 @@ import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-financial-invoice',
+  standalone: true,
   imports: [CommonModule, SidebarNavComponent],
   templateUrl: './financial-invoice.component.html',
   styleUrls: ['./financial-invoice.component.css']
@@ -19,7 +20,7 @@ export class FinancialInvoiceComponent {
   fieldKeys: string[] = [];
   error = '';
   loading = false;
-  pdfBase64: string = '';
+  selectedRow: any = null;
 
   ngOnInit() {
     this.fetchInvoiceData();
@@ -39,59 +40,68 @@ export class FinancialInvoiceComponent {
         if (res.status === 'S') {
           this.salesOrderList = res.data || [];
           this.fieldKeys = Object.keys(this.salesOrderList[0] || {});
-          this.pdfBase64 = res.pdfBase64;
         } else {
-          this.error = 'Failed to fetch data';
+          this.error = 'Failed to fetch invoice data';
         }
         this.loading = false;
       },
       error: () => {
-        this.error = 'Server error';
+        this.error = 'Server error occurred while fetching invoice data';
         this.loading = false;
       }
     });
   }
 
-  viewPDF() {
-    if (!this.pdfBase64) {
-      this.error = 'PDF not available';
-      return;
-    }
-    const byteCharacters = atob(this.pdfBase64);
-    const byteNumbers = Array.from(byteCharacters, char => char.charCodeAt(0));
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: 'application/pdf' });
-
-    const url = URL.createObjectURL(blob);
-    window.open(url);
+  selectRow(row: any): void {
+    this.selectedRow = row;
   }
 
-  downloadPDF() {
-    if (!this.pdfBase64) {
-      this.error = 'PDF not available';
+  downloadSelectedInvoice(): void {
+    if (!this.selectedRow) {
+      this.error = 'Please select a row first';
       return;
     }
-    const byteCharacters = atob(this.pdfBase64);
-    const byteNumbers = Array.from(byteCharacters, char => char.charCodeAt(0));
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: 'application/pdf' });
 
-    FileSaver.saveAs(blob, 'invoice.pdf');
+    const username = localStorage.getItem('username');
+    if (!username) {
+      this.error = 'Username not found in local storage';
+      return;
+    }
+
+    const body = {
+      username: username,
+      doc_no: this.selectedRow['Billed Document']
+    };
+    console.log('Download request body:', body);
+    this.http.post('http://localhost:3000/api/download-customer-invoice', body, {
+      responseType: 'blob'
+    }).subscribe({
+      next: (blob: Blob) => {
+        FileSaver.saveAs(blob, `customer_invoice_${body.doc_no}.pdf`);
+      },
+      error: (err) => {
+        console.error('Download error:', err);
+        this.error = 'Failed to download the customer invoice';
+      }
+    });
   }
 
-  downloadExcel() {
-    if (!this.salesOrderList.length) return;
+  downloadExcel(): void {
+    if (!this.salesOrderList.length) {
+      this.error = 'No data to export';
+      return;
+    }
 
-    const worksheet = XLSX.utils.json_to_sheet(this.salesOrderList);
-    const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    const blob = new Blob([excelBuffer], {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.salesOrderList);
+    const workbook: XLSX.WorkBook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+    const blob: Blob = new Blob([excelBuffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
     });
 
-    FileSaver.saveAs(blob, 'invoices.xlsx');
+    FileSaver.saveAs(blob, 'customer_invoices.xlsx');
   }
 }
-
 
 
