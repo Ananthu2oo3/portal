@@ -55,28 +55,28 @@ exports.getInvoiceData = async (req, res) => {
 
         const invoiceItems = rawItems.map(item => ({
           "Billed Document": item.BILLED_DOCUMENT || '',
-          "Billing Type": item.BILLING_TYPE || '',
+          // "Billing Type": item.BILLING_TYPE || '',
           "Billing Date": item.BILLING_DATE || '',
-          "Customer": item.CUSTOMER || '',
-          "Sales Organization": item.SALES_ORG || '',
+          // "Customer": item.CUSTOMER || '',
+          // "Sales Organization": item.SALES_ORG || '',  
           "Division": item.DIVISION || '',
           "Company Code": item.COMPANY_CODE || '',
           "Item Number": item.ITEM_NUMBER || '',
           "Description": item.DESCRIPTION || '',
           "Billed Quantity": item.BILLED_QUANTITY || '',
-          "Sales Unit": item.SALES_UNIT || '',
+          // "Sales Unit": item.SALES_UNIT || '',
           "Exchange Rate": item.EXCHANGE_RATE || '',
-          "Reference Document Number": item.REF_DOC_NO || '',
+          // "Reference Document Number": item.REF_DOC_NO || '',
           "Item Number of Ref Doc": item.ITEM_NO_REF_DOC || '',
-          "Vendor Number": item.VENDOR_NUMBER || '',
+          // "Vendor Number": item.VENDOR_NUMBER || '',
           "Payment Key": item.PAYMENT_KEY || '',
           "Purchase Order": item.PURCHASE_ORDER || '',
           "Material Number": item.MATERIAL_NUMBER || '',
           "Net Price": item.NET_PRICE || '',
           "Plant": item.PLANT || '',
-          "Storage Location": item.STORAGE_LOC || '',
-          "Posting Date": item.POSTING_DATE || '',
-          "Stock Transfer": item.STOCK_TRANSFER || ''
+          // "Storage Location": item.STORAGE_LOC || '',
+          // "Posting Date": item.POSTING_DATE || '',
+          // "Stock Transfer": item.STOCK_TRANSFER || ''
         }));
 
         return res.json({

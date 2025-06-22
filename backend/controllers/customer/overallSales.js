@@ -68,14 +68,14 @@ exports.getOverallSalesData = async (req, res) => {
           "Required Delivery Date": item.REQ_DEL_DATE || '',
           "Sales Probability": item.SALES_PROB || '',
           "Sold To Party": item.SOLD_TO_PARTY || '',
-          "Company Code To Be Billed": item.COMPANY_CODE_TO_BE_BILLED || '',
+          "Company Code": item.COMPANY_CODE_TO_BE_BILLED || '',
           "Material Available Date": item.MATERIAL_AVAILABLE_DATE || '',
           "Item Number": item.ITEM_NUMBER || '',
           "Material Number": item.MATERIAL_NUMBER || '',
-          "Customer Name": item.CUSTOMER_NAME || '',
+          // "Customer Name": item.CUSTOMER_NAME || '',
           "Material Description": item.MATERIAL_DECRIPTION || '',
           "Order Quantity": item.ORDER_QUANTITY || '',
-          "Payment Terms": item.PAYMENT_TERMS || '',
+          // "Payment Terms": item.PAYMENT_TERMS || '',
           "Sales Unit": item.SALES_UNIT || ''
         }));
 

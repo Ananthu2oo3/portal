@@ -66,20 +66,19 @@ exports.getInquiryData = async (req, res) => {
         // Map each item to a clean JSON object
         const documentDataList = itemList.map(item => ({
           "Document Number": item.DOCUMENT_NO || '',
-          "Document Type": item.DOCUMENT_TYPE || '',
-          "Customer ID": item.CUSTOMER_ID || '',
+          // "Customer ID": item.CUSTOMER_ID || '',
           "Created On": item.CREATED_ON || '',
           "Created By": item.CREATED_BY || '',
           "Sales Document Currency": item.SD_DOCUMENT_CURRENCY || '',
-          "Document Created Date": item.DOCUMENT_CREATED || '',
+          // "Document Created Date": item.DOCUMENT_CREATED || '',
           "Sales Organization": item.SALES_ORG || '',
           "Document Currency": item.DOCUMENT_CURRENCY || '',
           "Purchase Order Number": item.PO_NUMBER || '',
-          "Item Number": item.ITEM_NO || '',
           "Material Number": item.MAT_NR || '',
+          "Item Number": item.ITEM_NO || '',
           "Item Description": item.ITEM_DES || '',
-          "Cumulative Order Quantity (Sales)": item.CUM_OR_QUAN_SALES || '',
           "Requested Quantity": item.CUM_REQ_DEL_QUAN || '',
+          "Cumulative Order Quantity (Sales)": item.CUM_OR_QUAN_SALES || '',
           "Sales Unit": item.SALES_UNIT || ''
         }));
 

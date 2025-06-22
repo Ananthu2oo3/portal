@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
 
 import * as XLSX from 'xlsx';
@@ -16,6 +17,8 @@ import * as FileSaver from 'file-saver';
 
 export class DeliveryDataComponent {
   private http = inject(HttpClient);
+  private location = inject(Location);
+  
 
   deliveryList: any[] = [];
   fieldKeys: string[] = [];
@@ -69,5 +72,9 @@ export class DeliveryDataComponent {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
     });
     FileSaver.saveAs(blob, 'inquiry_data.xlsx');
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

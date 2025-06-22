@@ -44,8 +44,9 @@
 
 .styled-table th,
 .styled-table td {
-  padding: 12px 20px;
+  padding: 18px 15px;
   border: none; 
+  white-space: nowrap;
 }
 
 .styled-table tbody tr {
@@ -98,4 +99,30 @@
   overflow-x: auto;
   overflow-y: auto;
   margin-right: 50px; 
+}
+
+
+.floating-back-button {
+  position: fixed;
+  top: 30px;    /* adjust as needed */
+  left: 30px;   /* adjust as needed */
+  width: 50px;
+  height: 50px;
+  background-color: #ffea00; /* bright yellow */
+  color: #fff;               /* white arrow */
+  border: none;
+  border-radius: 50%;         /* makes it a circle */
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* stay on top of sidebar */
+  transition: background 0.3s;
+}
+
+.floating-back-button:hover {
+  background-color: #ffe100; /* slightly darker on hover */
 }

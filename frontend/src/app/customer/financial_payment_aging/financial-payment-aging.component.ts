@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
 
 import * as XLSX from 'xlsx';
@@ -17,6 +18,8 @@ import * as FileSaver from 'file-saver';
 export class FinancialPaymentAgingComponent {
   
   private http = inject(HttpClient);
+  private location = inject(Location);
+
   salesOrderList: any[] = [];
   fieldKeys: string[] = [];
   error: string = '';
@@ -70,5 +73,8 @@ export class FinancialPaymentAgingComponent {
   });
   FileSaver.saveAs(blob, 'inquiry_data.xlsx');
 }
+  goBack() {
+    this.location.back();
+  }
 
 }

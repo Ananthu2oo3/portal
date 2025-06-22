@@ -62,7 +62,7 @@ exports.getCreditDebitData = async (req, res) => {
 
         // ✅ Map fields to user-friendly keys
         const mappedList = itemList.map(item => ({
-          "Billing Document Number": item.BILLING_DOC_NO || '',
+          "Document Number": item.BILLING_DOC_NO || '',
           "Billing Type": item.BILLING_TYPE || '',
           "Billing Date": item.BILLING_DATE || '',
           "Sold To Customer": item.SOLD_TO_CUSTOMER || '',
@@ -74,7 +74,7 @@ exports.getCreditDebitData = async (req, res) => {
           // "FI Document Type": item.FI_DOC_TYPE || '',
           // "Company Code": item.COMPANY_CODE || '',
           // "Credit/Debit Nature": item.CREDIT_DEBIT_NATURE || '',
-          "Amount Doc Currency": item.AMT_DOC_CURR || '',
+          // "Amount Doc Currency": item.AMT_DOC_CURR || '',
           // "Debit/Credit Indicator": item.DEBIT_CREDIT_INDICATOR || '',
           "Customer Number": item.CUSTOMER_NUMBER || '',
           "Sales Unit": item.SALES_UNIT || '',
