@@ -48,7 +48,7 @@ exports.getPaymentAging = async (req, res) => {
       "Debit/Credit Indicator": entry.DebitCreditIndicator || '',
       "Amount (Local Currency)": entry.AmntLocCurrency || '',
       "Amount (Document Currency)": entry.AmntDocCurrency || '',
-      "Assignment Number": entry.AssignNo || '',
+      // "Assignment Number": entry.AssignNo || '',
       "Document Date": formatSAPDate(entry.DocDate),
       "Posting Date": formatSAPDate(entry.PostingDate),
       "Transaction Code": entry.TCode || '',

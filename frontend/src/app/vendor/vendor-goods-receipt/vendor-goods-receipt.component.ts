@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { Location } from '@angular/common';
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
 
 import * as XLSX from 'xlsx';
@@ -19,7 +20,10 @@ export class VendorQuotationRequestComponent implements OnInit {
   error: string = '';
   loading: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private location: Location
+  ) {}
 
   ngOnInit() {
     this.fetchGoodsReceipt();
@@ -75,5 +79,9 @@ export class VendorQuotationRequestComponent implements OnInit {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
     });
     FileSaver.saveAs(blob, 'goods_receipt_data.xlsx');
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

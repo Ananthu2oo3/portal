@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { Location } from '@angular/common';
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
 
 import * as XLSX from 'xlsx';
@@ -20,7 +21,10 @@ export class FinancialVendorInnvoiceComponent implements OnInit {
   error: string = '';
   loading: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private location: Location
+  ) {}
 
   ngOnInit() {
     this.fetchPaymentData();
@@ -112,5 +116,8 @@ export class FinancialVendorInnvoiceComponent implements OnInit {
         this.error = 'Failed to download the invoice.';
       }
     });
+  }
+  goBack() {
+    this.location.back();
   }
 }

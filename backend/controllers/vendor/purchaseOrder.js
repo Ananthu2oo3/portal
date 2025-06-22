@@ -54,7 +54,7 @@ exports.getPurchaseOrder = async (req, res) => {
       "Net Price": entry.NetPrice || '',
       "Plant": entry.Plant || '',
       "Delivery Date": formatSAPDate(entry.DeliveryDate),
-      "Item Category": entry.ItemCategory || '',
+      // "Item Category": entry.ItemCategory || '',
       "Document Category": entry.DocCategory || ''
     }));
 

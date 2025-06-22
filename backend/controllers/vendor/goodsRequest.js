@@ -39,8 +39,8 @@ exports.getGoodsReceipt = async (req, res) => {
 
     // 🗂️ Map to detailed readable keys
     const mappedData = goodsData.map(entry => ({
-      "Material Document Number": entry.MatDocNo || '',
-      "Document Year": entry.DocYear || '',
+      "Document Number": entry.MatDocNo || '',
+      // "Document Year": entry.DocYear || '',
       "Posting Date": formatSAPDate(entry.PostDate),
       "Document Date": formatSAPDate(entry.DocDate),
       "Document Type": entry.DocType || '',
@@ -54,7 +54,7 @@ exports.getGoodsReceipt = async (req, res) => {
       "Plant": entry.Plant || '',
       "Storage Location": entry.StorageLoc || '',
       "Material Number": entry.MatNo || '',
-      "Vendor Number": entry.VendorNo || ''
+      // "Vendor Number": entry.VendorNo || ''
     }));
 
     res.json({ status: 'SUCCESS', data: mappedData });
