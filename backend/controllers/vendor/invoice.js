@@ -39,8 +39,9 @@ exports.getVendorInvoice = async (req, res) => {
     const cleanedData = invoiceData.map(entry => ({
       // "Vendor Number": entry.VendorNo || '',
       // "Vendor Name": entry.VendorName || '',
-      "Vendor Address": entry.VendorAddress || '',
+
       "Document Number": entry.DocNo || '',
+      "Vendor Address": entry.VendorAddress || '',
       "Fiscal Year": entry.FiscalYear || '',
       "Document Date": formatSAPDate(entry.DocDate),
       "Posting Date": formatSAPDate(entry.PostingDate),

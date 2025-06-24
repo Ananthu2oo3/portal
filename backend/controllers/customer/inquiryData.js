@@ -78,7 +78,7 @@ exports.getInquiryData = async (req, res) => {
           "Item Number": item.ITEM_NO || '',
           "Item Description": item.ITEM_DES || '',
           "Requested Quantity": item.CUM_REQ_DEL_QUAN || '',
-          "Cumulative Order Quantity (Sales)": item.CUM_OR_QUAN_SALES || '',
+          "Cumulative Quantity": item.CUM_OR_QUAN_SALES || '',
           "Sales Unit": item.SALES_UNIT || ''
         }));
 

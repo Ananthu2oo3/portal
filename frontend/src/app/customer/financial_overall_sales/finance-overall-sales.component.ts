@@ -2,14 +2,16 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
+
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
+import { FilterSortComponent } from '../filter-sort/filter-sort.component';
 
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-finance-overall-sales',
-  imports: [CommonModule, SidebarNavComponent],
+  imports: [CommonModule, SidebarNavComponent, FilterSortComponent],
   templateUrl: './finance-overall-sales.component.html',
   styleUrl: './finance-overall-sales.component.css'
 })
@@ -20,6 +22,7 @@ export class FinanceOverallSalesComponent {
 
   salesOrderList: any[] = [];
   fieldKeys: string[] = [];
+  filteredList: any[] = [];
   error: string = '';
   loading = false;
 

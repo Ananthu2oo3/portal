@@ -10,12 +10,18 @@
   </button>
 </div>
 
+<app-filter-sort
+  [data]="salesOrderList"
+  [fieldKeys]="fieldKeys"
+  (filteredSorted)="filteredList = $event">
+</app-filter-sort>
+
   
   <div *ngIf="loading">Loading...</div>
   <div *ngIf="error" class="error">{{ error }}</div>
 
   <div class="table-wrapper">
-  <table *ngIf="salesOrderList.length" class="styled-table">
+  <table *ngIf="filteredList.length" class="styled-table">
 
     <thead>
       <tr>
@@ -23,13 +29,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of salesOrderList">
+      <tr *ngFor="let item of filteredList">
         <td *ngFor="let key of fieldKeys">{{ item[key] || 'N/A' }}</td>
       </tr>
     </tbody>
   </table>
   </div>
-  <div *ngIf="!loading && !salesOrderList.length && !error">
+  <div *ngIf="!loading && !filteredList.length && !error">
     No data available.
   </div>
 </div>

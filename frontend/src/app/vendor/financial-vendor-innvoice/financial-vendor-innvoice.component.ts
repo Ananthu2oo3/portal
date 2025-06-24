@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
+
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
+import { FilterSortComponent } from '../filter-sort/filter-sort.component';
 
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
@@ -10,13 +12,14 @@ import * as FileSaver from 'file-saver';
 @Component({
   standalone: true,
   selector: 'app-financial-vendor-innvoice',
-  imports: [CommonModule, SidebarNavComponent],
+  imports: [CommonModule, SidebarNavComponent, FilterSortComponent],
   templateUrl: './financial-vendor-innvoice.component.html',
   styleUrl: './financial-vendor-innvoice.component.css'
 })
 export class FinancialVendorInnvoiceComponent implements OnInit {
   vendorData: any[] = [];
   vendorDataKeys: string[] = [];
+  filteredList: any[] = [];
   selectedRow: any = null;
   error: string = '';
   loading: boolean = false;

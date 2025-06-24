@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
+
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
+import { FilterSortComponent } from '../filter-sort/filter-sort.component';
 
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
@@ -10,7 +12,7 @@ import * as FileSaver from 'file-saver';
 @Component({
   standalone: true,
   selector: 'app-vendor-purchase-order',
-  imports: [CommonModule, SidebarNavComponent],
+  imports: [CommonModule, SidebarNavComponent, FilterSortComponent],
   templateUrl: './financial-credit_debit.component.html',
   styleUrl: './financial-credit_debit.component.css'
 })
@@ -19,6 +21,7 @@ export class FinancialCreditDebitComponent {
 
 vendorData: any[] = [];
   vendorDataKeys: string[] = [];
+  filteredList: any[] = [];
   error: string = '';
   loading: boolean = false;
 

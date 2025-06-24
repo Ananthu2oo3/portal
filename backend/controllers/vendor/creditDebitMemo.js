@@ -38,10 +38,8 @@ exports.getCreditDebitMemo = async (req, res) => {
 
     // ✅ Map to user-friendly keys
     const mappedData = creditDebitData.map(entry => ({
-      "Vendor Number": entry.VendorNo || '',
-      "Vendor Name": entry.VendorName || '',
-      "Company Code": entry.CompanyCode || '',
       "Document Number": entry.DocNo || '',
+      "Company Code": entry.CompanyCode || '',
       "Fiscal Year": entry.FiscalYear || '',
       "Line Item Number": entry.NoLineItem || '',
       "Posting Key": entry.PostingKey || '',

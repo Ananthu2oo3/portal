@@ -39,10 +39,10 @@ exports.getPaymentAging = async (req, res) => {
 
     // 🧹 Map to user-friendly keys
     const mappedData = paymentAgingData.map(entry => ({
-      "Vendor Number": entry.VendorNo || '',
-      "Vendor Name": entry.VendorName || '',
-      "Company Code": entry.CompanyCode || '',
+      // "Vendor Number": entry.VendorNo || '',
+      // "Vendor Name": entry.VendorName || '',
       "Document Number": entry.DocNo || '',
+      "Company Code": entry.CompanyCode || '',
       "Fiscal Year": entry.FiscalYear || '',
       "Posting Key": entry.PostingKey || '',
       "Debit/Credit Indicator": entry.DebitCreditIndicator || '',

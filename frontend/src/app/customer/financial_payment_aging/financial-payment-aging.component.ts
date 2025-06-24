@@ -2,7 +2,9 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
+
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
+import { FilterSortComponent } from '../filter-sort/filter-sort.component';
 
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
@@ -10,7 +12,7 @@ import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-financial-payment-aging',
-  imports: [CommonModule, SidebarNavComponent],
+  imports: [CommonModule, SidebarNavComponent, FilterSortComponent],
   templateUrl: './financial-payment-aging.component.html',
   styleUrl: './financial-payment-aging.component.css'
 })
@@ -22,6 +24,7 @@ export class FinancialPaymentAgingComponent {
 
   salesOrderList: any[] = [];
   fieldKeys: string[] = [];
+  filteredList: any[] = [];
   error: string = '';
   loading = false;
 
