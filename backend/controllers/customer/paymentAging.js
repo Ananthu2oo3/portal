@@ -72,9 +72,9 @@ exports.getPaymentAgingData = async (req, res) => {
           "Due Date": item.DUE_DATE || '',
           "Aging": item.AGING || '',
           // "Customer Name": item.CUSTOMER_NAME || '',
-          "Customer City": item.CUSTOMER_CITY || '',
-          "Customer Country": item.CUSTOMER_COUNTRY || '',
-          "Division": item.DIVISION || ''
+          // "Customer City": item.CUSTOMER_CITY || '',
+          // "Customer Country": item.CUSTOMER_COUNTRY || '',
+          // "Division": item.DIVISION || ''
         }));
 
         return res.json({

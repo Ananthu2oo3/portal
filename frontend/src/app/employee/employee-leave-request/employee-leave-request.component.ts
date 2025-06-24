@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
 
 import * as XLSX from 'xlsx';
@@ -17,6 +18,7 @@ import * as FileSaver from 'file-saver';
 export class EmployeeLeaveRequestComponent {
 
   private http = inject(HttpClient);
+  private location = inject(Location);
 
   leaveRequest: any[] = [];
   fieldKeys: string[] = [];
@@ -71,4 +73,9 @@ export class EmployeeLeaveRequestComponent {
     });
     FileSaver.saveAs(blob, 'inquiry_data.xlsx');
   }
+
+  goBack() {
+    this.location.back();
+  }
+  
 }

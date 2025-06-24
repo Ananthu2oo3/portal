@@ -62,12 +62,12 @@ exports.getSalesOrderData = async (req, res) => {
         const filteredItemList = itemList.map(item => ({
 
           "Sales Doc Number": item.SALES_DOC_NUMBER,
-          "Material Available Date": item.MATERIAL_AVAILABLE_DATE,
-          "Order Quantity": item.ORDER_QUANTITY,
           "Sales Org": item.SALES_ORG,
-          "Required Delivery Date": item.REQ_DEL_DATE,
+          "Order Quantity": item.ORDER_QUANTITY,
           "Material Description": item.MATERIAL_DECRIPTION,
-          "Sales Unit": item.SALES_UNIT  
+          "Sales Unit": item.SALES_UNIT , 
+          "Required Delivery Date": item.REQ_DEL_DATE,
+          "Material Available Date": item.MATERIAL_AVAILABLE_DATE,
         }));
 
         return res.json({

@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
+import { FilterSortComponent } from '../filter-sort/filter-sort.component';
 
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-financial-credit-debit-memo',
-  imports: [CommonModule, SidebarNavComponent],
+  imports: [CommonModule, SidebarNavComponent, FilterSortComponent],
   templateUrl: './financial_debit_memo.component.html',
   styleUrl: './financial_debit_memo.component.css'
 })
@@ -20,6 +21,7 @@ export class CreditDebitMemoComponent {
 
   salesOrderList: any[] = [];
   fieldKeys: string[] = [];
+  filteredList: any[] = [];
   error: string = '';
   loading = false;
 
@@ -41,7 +43,9 @@ export class CreditDebitMemoComponent {
       next: (res) => {
         if (res.status === 'S' && Array.isArray(res.data)) {
           this.salesOrderList = res.data;
+          this.filteredList = res.data;
           this.fieldKeys = Object.keys(res.data[0] || {});
+          
         } else {
           this.error = 'No valid data received';
         }
@@ -56,6 +60,7 @@ export class CreditDebitMemoComponent {
 
   downloadExcel(): void {
   if (!this.salesOrderList.length) return;
+  // if (!this.filteredList.length) return;
 
   const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.salesOrderList);
   const workbook: XLSX.WorkBook = {

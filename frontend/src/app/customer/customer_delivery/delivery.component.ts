@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
+import { FilterSortComponent } from '../filter-sort/filter-sort.component';
 
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
@@ -10,7 +11,7 @@ import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-delivery-data',
   standalone: true,
-  imports: [CommonModule, SidebarNavComponent],
+  imports: [CommonModule, SidebarNavComponent, FilterSortComponent],
   templateUrl: './delivery.component.html',
   styleUrls: ['./delivery.component.css']
 })
@@ -22,6 +23,7 @@ export class DeliveryDataComponent {
 
   deliveryList: any[] = [];
   fieldKeys: string[] = [];
+  filteredList: any[] = [];
   error: string = '';
   loading = false;
 

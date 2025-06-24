@@ -78,8 +78,9 @@
 
 .styled-table th,
 .styled-table td {
-  padding: 12px 20px;
+  padding: 18px 15px;
   border: none; 
+  white-space: nowrap;
 }
 
 .styled-table tbody tr {
