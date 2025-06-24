@@ -2,7 +2,9 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
+
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
+import { FilterSortComponent } from '../filter-sort/filter-sort.component';
 
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
@@ -11,7 +13,7 @@ import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-employee-leave-request',
   standalone: true,
-  imports: [CommonModule, SidebarNavComponent],
+  imports: [CommonModule, SidebarNavComponent, FilterSortComponent],
   templateUrl: './employee-leave-request.component.html',
   styleUrl: './employee-leave-request.component.css'
 })
@@ -22,6 +24,7 @@ export class EmployeeLeaveRequestComponent {
 
   leaveRequest: any[] = [];
   fieldKeys: string[] = [];
+  filteredList: any[] = [];
   error: string = '';
   loading = false;
 

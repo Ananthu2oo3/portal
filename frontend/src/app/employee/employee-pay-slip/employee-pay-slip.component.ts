@@ -1,14 +1,16 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+
 import { SidebarNavComponent } from '../sidebar-nav/sidebar-nav.component';
+import { FilterSortComponent } from '../filter-sort/filter-sort.component';
 
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-employee-pay-slip',
-  imports: [CommonModule, SidebarNavComponent],
+  imports: [CommonModule, SidebarNavComponent, FilterSortComponent],
   templateUrl: './employee-pay-slip.component.html',
   styleUrl: './employee-pay-slip.component.css'
 })
@@ -18,6 +20,7 @@ export class EmployeePaySlipComponent {
 
   paySlipList: any[] = [];
   fieldKeys: string[] = [];
+  filteredList: any[] = [];
   error = '';
   loading = false;
   pdfBase64: string = '';
